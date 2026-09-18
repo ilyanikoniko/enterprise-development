@@ -159,15 +159,38 @@
 - GitHub Actions
 
 ## Структура
-DryCleaner/
-├── DryCleaner.Domain/ # Доменная модель
-│ ├── Entities/ # Client, Category, Item, Order
-│ ├── Enums/ # OrderStatus
-│ └── Data/ # DataSeed
-├── DryCleaner.Tests/ # Юнит-тесты
-│ ├── AnalyticsTests.cs
-│ └── DryCleanerFixture.cs
-└── DryCleaner.slnx
+```
+enterprise-development/
+├── .github/
+│ └── workflows/
+│ └── tests.yml 
+│
+├── DryCleaner/
+│ ├── DryCleaner.Domain/
+│ │ ├── Entities/
+│ │ │ ├── Client.cs 
+│ │ │ ├── Category.cs 
+│ │ │ ├── Item.cs 
+│ │ │ └── Order.cs 
+│ │ ├── Enums/
+│ │ │ └── OrderStatus.cs 
+│ │ ├── Data/
+│ │ │ └── DataSeed.cs 
+│ │ └── DryCleaner.Domain.csproj
+│ │
+│ ├── DryCleaner.Tests/
+│ │ ├── AnalyticsTests.cs 
+│ │ ├── DryCleanerFixture.cs 
+│ │ └── DryCleaner.Tests.csproj
+│ │
+│ └── DryCleaner.slnx 
+│
+├── docs/
+│ ├── tests_results.png 
+│ └── solution_structure.png 
+│
+└── README.md
+```
 
 text
 
@@ -183,6 +206,7 @@ text
 
 ```bash
 dotnet test DryCleaner/DryCleaner.Tests/DryCleaner.Tests.csproj
+```
 
 ## Результаты тестов
 
