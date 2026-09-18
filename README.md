@@ -134,3 +134,56 @@
 
 Чтобы задать вопрос по лабораторной, воспользуйтесь [соотвествующим разделом дискуссий](https://github.com/itsecd/enterprise-development/discussions/categories/questions) или заведите [ишью](https://github.com/itsecd/enterprise-development/issues/new).  
 Если у вас появились идеи/пожелания/прочие полезные мысли по преподаваемой дисциплине, их можно оставить [здесь](https://github.com/itsecd/enterprise-development/discussions/categories/ideas).
+
+
+# Лабораторная работа №1 — Доменная модель «Химчистка»
+
+Учебный проект по дисциплине «Разработка корпоративных приложений» на платформе .NET 10.
+
+## Предметная область
+
+В базе данных химчистки хранятся сведения о принятых изделиях, клиентах и заказах.
+
+- **Изделие** характеризуется наименованием, категорией, материалом.
+- **Категория изделия** — справочник: название, рекомендуемый вид чистки, стоимость.
+- **Клиент** характеризуется ФИО, телефоном.
+- **Заказ** содержит информацию о клиенте, изделии, дате приёма, сроке выполнения, статусе.
+
+Данные хранятся **в памяти** в виде коллекций.
+
+## Технологии
+
+- .NET 10
+- xUnit v3
+- LINQ
+- GitHub Actions
+
+## Структура
+DryCleaner/
+├── DryCleaner.Domain/ # Доменная модель
+│ ├── Entities/ # Client, Category, Item, Order
+│ ├── Enums/ # OrderStatus
+│ └── Data/ # DataSeed
+├── DryCleaner.Tests/ # Юнит-тесты
+│ ├── AnalyticsTests.cs
+│ └── DryCleanerFixture.cs
+└── DryCleaner.slnx
+
+text
+
+## Тесты
+
+1. `OrdersInProgressSortedByAcceptanceDate` — заказы в обработке по дате.
+2. `Top5ClientsByOrdersCountForPeriod` — топ-5 клиентов за период.
+3. `ClientsWithLongestOrdersSortedByName` — долгие заказы, по ФИО.
+4. `Top5PopularAndUnpopularCategoriesForLastYear` — топ-5 категорий за год.
+5. `ClientWithMaxTotalSpent` — клиент с макс. суммой.
+
+## Запуск
+
+```bash
+dotnet test DryCleaner/DryCleaner.Tests/DryCleaner.Tests.csproj
+
+## Результаты тестов
+
+![tests_results](./docs/tests_results.png)
