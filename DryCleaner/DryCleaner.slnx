@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="DryCleaner.Domain/DryCleaner.Domain.csproj" />
+  <Project Path="DryCleaner.Tests/DryCleaner.Tests.csproj" />
+</Solution>
