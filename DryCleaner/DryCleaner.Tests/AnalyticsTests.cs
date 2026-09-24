@@ -5,17 +5,9 @@ namespace DryCleaner.Tests;
 /// <summary>
 /// Аналитические тесты для химчистки
 /// </summary>
-public class AnalyticsTests : IClassFixture<DryCleanerFixture>
+public class AnalyticsTests(DryCleanerFixture fixture) : IClassFixture<DryCleanerFixture>
 {
-    private readonly DryCleanerFixture _fixture;
-
-    /// <summary>
-    /// Инициализцаия тестового класса фикстурой
-    /// </summary>
-    public AnalyticsTests(DryCleanerFixture fixture)
-    {
-        _fixture = fixture;
-    }
+    private readonly DryCleanerFixture _fixture = fixture;
 
     /// <summary>
     /// Тест 1: заказы, находящиеся в обработке, упорядоченные по дате приёма
