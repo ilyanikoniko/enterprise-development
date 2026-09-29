@@ -7,8 +7,7 @@ namespace DryCleaner.Tests;
 /// </summary>
 public class AnalyticsTests(DryCleanerFixture fixture) : IClassFixture<DryCleanerFixture>
 {
-    private readonly DryCleanerFixture _fixture = fixture;
-
+    
     /// <summary>
     /// Тест 1: заказы, находящиеся в обработке, упорядоченные по дате приёма
     /// </summary>
@@ -17,7 +16,7 @@ public class AnalyticsTests(DryCleanerFixture fixture) : IClassFixture<DryCleane
     {
         var expectedIds = new[] { 3, 41, 18, 36, 45, 47, 26, 48, 4, 15, 30, 8, 21, 50 };
 
-        var result = _fixture.Orders
+        var result = fixture.Orders
             .Where(o => o.Status == OrderStatus.InProgress)
             .OrderBy(o => o.AcceptanceDate)
             .ToList();
@@ -36,7 +35,7 @@ public class AnalyticsTests(DryCleanerFixture fixture) : IClassFixture<DryCleane
 
         var expectedClientIds = new[] { 1, 2, 3, 4, 5 };
 
-        var result = _fixture.Orders
+        var result = fixture.Orders
             .Where(o => o.AcceptanceDate >= dateFrom && o.AcceptanceDate <= dateTo)
             .GroupBy(o => o.Client)
             .Select(g => new { Client = g.Key, OrdersCount = g.Count() })
@@ -48,26 +47,23 @@ public class AnalyticsTests(DryCleanerFixture fixture) : IClassFixture<DryCleane
     }
 
     /// <summary>
-    /// Тест 3: топ-5 клиентов, чьи заказы обрабатывались дольше всего, упорядоченные по ФИО
+    /// Тест 3: клиенты чьи заказы обрабатывались дольше всего, упорядоченные по ФИО
     /// </summary>
     [Fact]
     public void ClientsWithLongestOrdersSortedByName()
     {
-        var expectedClientIds = new[] { 12, 4, 8, 3, 13 };
+        var maxDays = fixture.Orders.Max(o => o.CompletionDays);
 
-        var result = _fixture.Orders
-            .GroupBy(o => o.Client)
-            .Select(g => new
-            {
-                Client = g.Key,
-                MaxDays = g.Max(o => o.CompletionDays)
-            })
-            .OrderByDescending(x => x.MaxDays)
-            .ThenBy(x => x.Client!.FullName)
-            .Take(5)
+        var result = fixture.Orders
+            .Where(o => o.CompletionDays == maxDays)
+            .Select(o => o.Client!)
+            .Distinct()
+            .OrderBy(c => c.FullName)
             .ToList();
 
-        Assert.Equal(expectedClientIds, result.Select(x => x.Client!.Id));
+        var expectedClientIds = new[] { 12, 4 };
+
+        Assert.Equal(expectedClientIds, result.Select(c => c.Id));
     }
 
     /// <summary>
@@ -82,7 +78,7 @@ public class AnalyticsTests(DryCleanerFixture fixture) : IClassFixture<DryCleane
         var expectedMostPopularIds = new[] { 10, 5, 8, 6, 9 };
         var expectedLeastPopularIds = new[] { 1, 3, 4, 5, 8 };
 
-        var categories = _fixture.Orders
+        var categories = fixture.Orders
             .Where(o => o.AcceptanceDate >= dateFrom && o.AcceptanceDate <= dateTo)
             .GroupBy(o => o.Item!.Category)
             .Select(g => new { Category = g.Key, OrdersCount = g.Count() })
@@ -96,23 +92,25 @@ public class AnalyticsTests(DryCleanerFixture fixture) : IClassFixture<DryCleane
     }
 
     /// <summary>
-    /// Тест 5: клиент, потративший наибольшую сумму за весь период работы химчистки
+    /// Тест 5: клиенты, потратившие наибольшую сумму за весь период работы химчистки
     /// </summary>
     [Fact]
-    public void ClientWithMaxTotalSpent()
+    public void ClientsWithMaxTotalSpent()
     {
-        var expectedClientId = 1;
-
-        var result = _fixture.Orders
+        var totals = fixture.Orders
             .GroupBy(o => o.Client)
-            .Select(g => new
-            {
-                Client = g.Key,
-                TotalSpent = g.Sum(o => o.Item!.Category!.CleaningPrice)
-            })
-            .OrderByDescending(x => x.TotalSpent)
-            .First();
+            .Select(g => new { Client = g.Key, TotalSpent = g.Sum(o => o.Item!.Category!.CleaningPrice) })
+            .ToList();
 
-        Assert.Equal(expectedClientId, result.Client!.Id);
+        var maxSpent = totals.Max(x => x.TotalSpent);
+
+        var result = totals
+            .Where(x => x.TotalSpent == maxSpent)
+            .OrderBy(x => x.Client!.FullName)
+            .ToList();
+
+        var expectedClientIds = new[] { 1 };   
+
+        Assert.Equal(expectedClientIds, result.Select(x => x.Client!.Id));
     }
 }
