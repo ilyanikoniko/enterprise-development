@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="src/DryCleaner.Contracts/DryCleaner.Contracts.csproj" Id="50a12b70-641c-4a46-8d2d-bcb1c925d140" />
   <Project Path="src/DryCleaner.Domain/DryCleaner.Domain.csproj" />
   <Project Path="tests/DryCleaner.Tests/DryCleaner.Tests.csproj" />
 </Solution>
