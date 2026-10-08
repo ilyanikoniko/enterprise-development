@@ -3,9 +3,9 @@
 namespace DryCleaner.Contracts.Dtos;
 
 /// <summary>
-/// DTO изделия (для создания/редактирования)
+/// DTO изделия (для обновления)
 /// </summary>
-public class ItemEditDto
+public class ItemUpdateDto
 {
     /// <summary>
     /// Наименование изделия
@@ -20,10 +20,4 @@ public class ItemEditDto
     [Required(ErrorMessage = "Материал обязателен")]
     [MaxLength(100)]
     public required string Material { get; set; }
-
-    /// <summary>
-    /// Идентификатор категории
-    /// </summary>
-    [Range(1, int.MaxValue, ErrorMessage = "Выберите категорию")]
-    public int CategoryId { get; set; }
 }
