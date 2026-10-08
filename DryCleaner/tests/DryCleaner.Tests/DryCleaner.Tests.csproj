@@ -20,7 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\DryCleaner.Domain\DryCleaner.Domain.csproj" />
+		<ProjectReference Include="..\..\src\DryCleaner.Domain\DryCleaner.Domain.csproj" />
 	</ItemGroup>
 
 </Project>
