@@ -4,6 +4,6 @@ using System.Text;
 
 namespace DryCleaner.Contracts.Dtos;
 
-internal class TopClientDto
+public class TopClientDto
 {
 }
