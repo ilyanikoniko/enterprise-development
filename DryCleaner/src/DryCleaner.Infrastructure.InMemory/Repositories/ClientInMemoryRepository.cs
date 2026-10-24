@@ -9,6 +9,11 @@ public class ClientInMemoryRepository : IRepository<Client, int>
 
     public Task<Client> Create(Client entity)
     {
+        if (entity.Id == 0)
+        {
+            entity.Id = _clients.Any() ? _clients.Max(c => c.Id) + 1 : 1;
+        }
+
         _clients.Add(entity);
         return Task.FromResult(entity);
     }

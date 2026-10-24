@@ -8,7 +8,7 @@ public class Client
     /// <summary>
     /// Идентификатор клиента
     /// </summary>
-    public required int Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// ФИО клиента

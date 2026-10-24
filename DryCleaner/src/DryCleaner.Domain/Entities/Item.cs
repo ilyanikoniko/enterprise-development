@@ -8,7 +8,7 @@ public class Item
     /// <summary>
     /// Идентификатор изделия
     /// </summary>
-    public required int Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Наименование изделия

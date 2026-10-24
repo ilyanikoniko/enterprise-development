@@ -10,7 +10,7 @@ public class Order
     /// <summary>
     /// Идентификатор заказа
     /// </summary>
-    public required int Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Идентификатор клиента

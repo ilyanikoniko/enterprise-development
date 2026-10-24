@@ -5,6 +5,6 @@ namespace DryCleaner.Domain.Interfaces;
 /// <summary>
 /// Репозиторий заказов
 /// </summary>
-public interface IOrderRepository : IRepository<Order>
+public interface IOrderRepository : IRepository<Order, int>
 {
 }
