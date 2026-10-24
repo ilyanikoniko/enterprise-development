@@ -23,7 +23,7 @@ public interface IRepository<TEntity, TKey>
     /// <summary>
     /// Обновить сущность
     /// </summary>
-    public Task<TEntity?> Update(TEntity entity);
+    public Task<TEntity> Update(TEntity entity);
 
     /// <summary>
     /// Удалить сущность по идентификатору
