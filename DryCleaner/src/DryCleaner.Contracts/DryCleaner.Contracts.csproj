@@ -10,8 +10,4 @@
     <ProjectReference Include="..\DryCleaner.Domain\DryCleaner.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
 </Project>

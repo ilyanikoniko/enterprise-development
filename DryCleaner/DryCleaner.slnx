@@ -1,4 +1,7 @@
 <Solution>
-  <Project Path="DryCleaner.Domain/DryCleaner.Domain.csproj" />
-  <Project Path="DryCleaner.Tests/DryCleaner.Tests.csproj" />
+  <Project Path="DryCleaner.Application/DryCleaner.Application.csproj" Id="19678470-7d63-4a52-8348-9146d8a8f906" />
+  <Project Path="src/DryCleaner.Contracts/DryCleaner.Contracts.csproj" />
+  <Project Path="src/DryCleaner.Domain/DryCleaner.Domain.csproj" />
+  <Project Path="src/DryCleaner.Infrastructure.InMemory/DryCleaner.Infrastructure.InMemory.csproj" />
+  <Project Path="tests/DryCleaner.Tests/DryCleaner.Tests.csproj" />
 </Solution>
