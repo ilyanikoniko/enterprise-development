@@ -3,20 +3,4 @@
 /// <summary>
 /// DTO клиента для чтения
 /// </summary>
-public class ClientDto
-{
-    /// <summary>
-    /// Идентификатор клиента
-    /// </summary>
-    public int Id { get; set; }
-
-    /// <summary>
-    /// ФИО клиента
-    /// </summary>
-    public required string FullName { get; set; }
-
-    /// <summary>
-    /// Номер телефона
-    /// </summary>
-    public required string PhoneNumber { get; set; }
-}
+public record ClientDto(int Id, string FullName, string PhoneNumber);

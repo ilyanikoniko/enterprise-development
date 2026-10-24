@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace DryCleaner.Contracts.Dtos;
 
-namespace DryCleaner.Contracts.Dtos;
-
-public class TopClientDto
-{
-}
+/// <summary>
+/// DTO для топа клиентов
+/// </summary>
+public record TopClientDto(int ClientId, string ClientFullName, int OrdersCount);
