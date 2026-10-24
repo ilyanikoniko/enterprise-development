@@ -3,30 +3,30 @@
 /// <summary>
 /// Базовый интерфейс репозитория для сущности
 /// </summary>
-public interface IRepository<T> where T : class
+public interface IRepository<TEntity, TKey>
 {
     /// <summary>
-    /// Получить все сущности
+    /// Добавить сущность
     /// </summary>
-    Task<IReadOnlyList<T>> GetAllAsync();
+    public Task<TEntity> Create(TEntity entity);
 
     /// <summary>
     /// Получить сущность по идентификатору
     /// </summary>
-    Task<T?> GetByIdAsync(int id);
+    public Task<TEntity?> Read(TKey entityId);
 
     /// <summary>
-    /// Добавить сущность
+    /// Получить все сущности
     /// </summary>
-    Task<T> AddAsync(T entity);
+    public Task<IList<TEntity>> ReadAll();
 
     /// <summary>
     /// Обновить сущность
     /// </summary>
-    Task<T?> UpdateAsync(T entity);
+    public Task<TEntity?> Update(TEntity entity);
 
     /// <summary>
     /// Удалить сущность по идентификатору
     /// </summary>
-    Task<bool> DeleteAsync(int id);
+    public Task<bool> Delete(TKey entityId);
 }
