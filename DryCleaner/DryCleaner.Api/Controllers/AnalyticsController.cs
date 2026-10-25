@@ -41,7 +41,7 @@ public class AnalyticsController(
         catch (Exception ex)
         {
             logger.LogError("An exception happened during {method} method of {controller}: {@exception}", nameof(GetOrdersInProgress), GetType().Name, ex);
-            return StatusCode(500, $"{ex.Message}");
+            return StatusCode(500, "Internal server error. Please try again later.");
         }
     }
 
@@ -67,7 +67,7 @@ public class AnalyticsController(
         catch (Exception ex)
         {
             logger.LogError("An exception happened during {method} method of {controller}: {@exception}", nameof(GetTop5Clients), GetType().Name, ex);
-            return StatusCode(500, $"{ex.Message}");
+            return StatusCode(500, "Internal server error. Please try again later.");
         }
     }
 
@@ -91,7 +91,7 @@ public class AnalyticsController(
         catch (Exception ex)
         {
             logger.LogError("An exception happened during {method} method of {controller}: {@exception}", nameof(GetLongestOrders), GetType().Name, ex);
-            return StatusCode(500, $"{ex.Message}");
+            return StatusCode(500, "Internal server error. Please try again later.");
         }
     }
 
@@ -116,7 +116,7 @@ public class AnalyticsController(
         catch (Exception ex)
         {
             logger.LogError("An exception happened during {method} method of {controller}: {@exception}", nameof(GetTop5Categories), GetType().Name, ex);
-            return StatusCode(500, $"{ex.Message}");
+            return StatusCode(500, "Internal server error. Please try again later.");
         }
     }
 
@@ -140,7 +140,7 @@ public class AnalyticsController(
         catch (Exception ex)
         {
             logger.LogError("An exception happened during {method} method of {controller}: {@exception}", nameof(GetMaxSpender), GetType().Name, ex);
-            return StatusCode(500, $"{ex.Message}");
+            return StatusCode(500, "Internal server error. Please try again later.");
         }
     }
 }
