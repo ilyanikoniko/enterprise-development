@@ -9,6 +9,10 @@ public class CategoryInMemoryRepository : IRepository<Category, int>
 
     public Task<Category> Create(Category entity)
     {
+        if (entity.Id == 0)
+        {
+            entity.Id = _categories.Any() ? _categories.Max(c => c.Id) + 1 : 1;
+        }
         _categories.Add(entity);
         return Task.FromResult(entity);
     }

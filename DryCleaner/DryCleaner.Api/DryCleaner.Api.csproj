@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DryCleaner.Application\DryCleaner.Application.csproj" />
+    <ProjectReference Include="..\src\DryCleaner.Contracts\DryCleaner.Contracts.csproj" />
+    <ProjectReference Include="..\src\DryCleaner.Domain\DryCleaner.Domain.csproj" />
+    <ProjectReference Include="..\src\DryCleaner.Infrastructure.InMemory\DryCleaner.Infrastructure.InMemory.csproj" />
+  </ItemGroup>
+
+</Project>

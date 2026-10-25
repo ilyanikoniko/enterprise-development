@@ -9,6 +9,10 @@ public class OrderInMemoryRepository : IRepository<Order, int>
 
     public Task<Order> Create(Order entity)
     {
+        if (entity.Id == 0)
+        {
+            entity.Id = _orders.Any() ? _orders.Max(o => o.Id) + 1 : 1;
+        }
         _orders.Add(entity);
         return Task.FromResult(entity);
     }
