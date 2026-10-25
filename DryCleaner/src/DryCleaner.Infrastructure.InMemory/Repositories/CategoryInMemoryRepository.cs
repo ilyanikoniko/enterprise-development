@@ -3,7 +3,7 @@ using DryCleaner.Domain.Interfaces;
 
 namespace DryCleaner.Infrastructure.InMemory.Repositories;
 
-public class CategoryInMemoryRepository : IRepository<Category, int>
+public class CategoryInMemoryRepository : ICategoryRepository
 {
     private readonly List<Category> _categories = [];
 

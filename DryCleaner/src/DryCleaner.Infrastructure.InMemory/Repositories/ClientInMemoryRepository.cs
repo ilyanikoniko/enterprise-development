@@ -3,7 +3,7 @@ using DryCleaner.Domain.Interfaces;
 
 namespace DryCleaner.Infrastructure.InMemory.Repositories;
 
-public class ClientInMemoryRepository : IRepository<Client, int>
+public class ClientInMemoryRepository : IClientRepository
 {
     private readonly List<Client> _clients = [];
 

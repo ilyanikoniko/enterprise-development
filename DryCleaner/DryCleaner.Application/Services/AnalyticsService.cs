@@ -1,14 +1,18 @@
 ﻿using DryCleaner.Application.Mappers;
 using DryCleaner.Contracts.Dtos;
 using DryCleaner.Contracts.Interfaces;
+using DryCleaner.Domain.Entities;
 using DryCleaner.Domain.Enums;
 using DryCleaner.Domain.Interfaces;
 
 namespace DryCleaner.Application.Services;
 
-public class AnalyticsService(IOrderRepository orderRepository) : IAnalyticsService
+public class AnalyticsService(
+    IOrderRepository orderRepository,
+    IRepository<Client, int> clientRepository,
+    IRepository<Item, int> itemRepository,
+    IRepository<Category, int> categoryRepository) : IAnalyticsService
 {
-    // Тест 1
     public async Task<IReadOnlyList<OrderDto>> GetOrdersInProgressAsync()
     {
         var orders = await orderRepository.ReadAll();
@@ -19,67 +23,95 @@ public class AnalyticsService(IOrderRepository orderRepository) : IAnalyticsServ
             .ToList();
     }
 
-    // Тест 2
     public async Task<IReadOnlyList<TopClientDto>> GetTop5ClientsAsync(DateTime from, DateTime to)
     {
         var orders = await orderRepository.ReadAll();
+        var clients = await clientRepository.ReadAll();
+
         return orders
             .Where(o => o.AcceptanceDate >= from && o.AcceptanceDate <= to)
-            .GroupBy(o => o.Client)
-            .Select(g => new TopClientDto(g.Key!.Id, g.Key!.FullName, g.Count()))
+            .GroupBy(o => o.ClientId)
+            .Select(g => {
+                var client = clients.FirstOrDefault(c => c.Id == g.Key);
+                return new TopClientDto(g.Key, client?.FullName ?? "Неизвестно", g.Count());
+            })
             .OrderByDescending(x => x.OrdersCount)
             .Take(5)
             .ToList();
     }
 
-    // Тест 3
     public async Task<IReadOnlyList<LongestOrderClientDto>> GetClientsWithLongestOrdersAsync()
     {
         var orders = await orderRepository.ReadAll();
+        var clients = await clientRepository.ReadAll();
+
+        if (!orders.Any()) return new List<LongestOrderClientDto>();
+
         var maxDays = orders.Max(o => o.CompletionDays);
 
         return orders
             .Where(o => o.CompletionDays == maxDays)
-            .Select(o => o.Client!)
+            .Select(o => o.ClientId)
             .Distinct()
-            .OrderBy(c => c.FullName)
-            .Select(c => new LongestOrderClientDto(c.Id, c.FullName, maxDays))
+            .Select(id => {
+                var client = clients.FirstOrDefault(c => c.Id == id);
+                return new LongestOrderClientDto(id, client?.FullName ?? "Неизвестно", maxDays);
+            })
+            .OrderBy(c => c.ClientFullName)
             .ToList();
     }
 
-    // Тест 4
     public async Task<CategoryStatDto> GetTop5CategoriesAsync(DateTime from, DateTime to)
     {
         var orders = await orderRepository.ReadAll();
+        var items = await itemRepository.ReadAll();
+        var categories = await categoryRepository.ReadAll();
 
-        var categories = orders
+        // 1. Считаем сколько раз встречается каждая категория
+        var categoryStats = orders
             .Where(o => o.AcceptanceDate >= from && o.AcceptanceDate <= to)
-            .GroupBy(o => o.Item!.Category)
-            .Select(g => new CategoryCountDto(g.Key!.Id, g.Key!.Name, g.Count()))
+            .Join(items, o => o.ItemId, i => i.Id, (o, i) => i.CategoryId) // Связываем заказы с категориями через изделия
+            .GroupBy(catId => catId)
+            .Select(g => {
+                var cat = categories.FirstOrDefault(c => c.Id == g.Key);
+                return new CategoryCountDto(g.Key, cat?.Name ?? "Неизвестно", g.Count());
+            })
             .ToList();
 
-        var mostPopular = categories.OrderByDescending(x => x.OrdersCount).Take(5).ToList();
-        var leastPopular = categories.OrderBy(x => x.OrdersCount).Take(5).ToList();
+        // 2. Берем топ-5 популярных и топ-5 непопулярных
+        var mostPopular = categoryStats.OrderByDescending(x => x.OrdersCount).Take(5).ToList();
+        var leastPopular = categoryStats.OrderBy(x => x.OrdersCount).Take(5).ToList();
 
         return new CategoryStatDto(mostPopular, leastPopular);
     }
 
-    // Тест 5
     public async Task<MaxSpenderDto?> GetMaxSpenderAsync()
     {
         var orders = await orderRepository.ReadAll();
+        var clients = await clientRepository.ReadAll();
+        var items = await itemRepository.ReadAll();
+        var categories = await categoryRepository.ReadAll();
 
+        // Считаем сумму для каждого клиента
         var totals = orders
-            .GroupBy(o => o.Client)
-            .Select(g => new MaxSpenderDto(
-                g.Key!.Id,
-                g.Key!.FullName,
-                g.Sum(o => o.Item!.Category!.CleaningPrice)))
+            .GroupBy(o => o.ClientId)
+            .Select(g => {
+                var client = clients.FirstOrDefault(c => c.Id == g.Key);
+
+                // Сумма = сумма цен категорий всех изделий в заказах клиента
+                var totalSpent = g.Sum(o => {
+                    var item = items.FirstOrDefault(i => i.Id == o.ItemId);
+                    var category = categories.FirstOrDefault(c => c.Id == item?.CategoryId);
+                    return category?.CleaningPrice ?? 0;
+                });
+
+                return new MaxSpenderDto(g.Key, client?.FullName ?? "Неизвестно", totalSpent);
+            })
             .ToList();
 
         if (totals.Count == 0) return null;
 
-        var maxSpent = totals.Max(x => x.TotalSpent);
-        return totals.OrderBy(x => x.ClientFullName).FirstOrDefault(x => x.TotalSpent == maxSpent);
+        // Сортируем по убыванию суммы и берем первого
+        return totals.OrderByDescending(x => x.TotalSpent).FirstOrDefault();
     }
 }

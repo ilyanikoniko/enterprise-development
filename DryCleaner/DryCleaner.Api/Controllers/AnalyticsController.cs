@@ -1,12 +1,14 @@
 ﻿using DryCleaner.Contracts.Dtos;
 using DryCleaner.Contracts.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DryCleaner.Api.Controllers;
 
 /// <summary>
 /// Контроллер аналитических запросов
 /// </summary>
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class AnalyticsController(

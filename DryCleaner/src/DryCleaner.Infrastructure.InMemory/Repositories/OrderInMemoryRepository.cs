@@ -3,7 +3,7 @@ using DryCleaner.Domain.Interfaces;
 
 namespace DryCleaner.Infrastructure.InMemory.Repositories;
 
-public class OrderInMemoryRepository : IRepository<Order, int>
+public class OrderInMemoryRepository : IOrderRepository
 {
     private readonly List<Order> _orders = [];
 
