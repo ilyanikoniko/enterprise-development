@@ -2,6 +2,9 @@
 
 namespace DryCleaner.Contracts.Dtos;
 
+/// <summary>
+/// DTO заказа для чтения
+/// </summary>
 public record OrderDto(
     int Id,
     int ClientId,

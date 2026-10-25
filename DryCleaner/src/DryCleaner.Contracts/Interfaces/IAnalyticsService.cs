@@ -3,7 +3,7 @@
 namespace DryCleaner.Contracts.Interfaces;
 
 /// <summary>
-/// Сервис аналитики.
+/// Сервис аналитики
 /// </summary>
 public interface IAnalyticsService
 {

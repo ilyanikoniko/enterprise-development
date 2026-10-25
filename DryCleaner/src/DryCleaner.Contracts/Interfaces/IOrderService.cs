@@ -2,6 +2,9 @@
 
 namespace DryCleaner.Contracts.Interfaces;
 
+/// <summary>
+/// Интерфейс сервиса для работы с заказами, расширяющий базовый CRUD-функционал
+/// </summary>
 public interface IOrderService : IApplicationService<OrderDto, OrderCreateDto, int>
 {
     /// <summary>

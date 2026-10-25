@@ -3,10 +3,16 @@ using DryCleaner.Domain.Interfaces;
 
 namespace DryCleaner.Infrastructure.InMemory.Repositories;
 
+/// <summary>
+/// Репозиторий для работы с заказами в памяти
+/// </summary>
 public class OrderInMemoryRepository : IOrderRepository
 {
     private readonly List<Order> _orders = [];
 
+    /// <summary>
+    /// Создать новый заказ
+    /// </summary>
     public Task<Order> Create(Order entity)
     {
         if (entity.Id == 0)
@@ -17,6 +23,9 @@ public class OrderInMemoryRepository : IOrderRepository
         return Task.FromResult(entity);
     }
 
+    /// <summary>
+    /// Удалить заказ по id
+    /// </summary>
     public Task<bool> Delete(int entityId)
     {
         var order = Read(entityId).Result;
@@ -27,12 +36,21 @@ public class OrderInMemoryRepository : IOrderRepository
         return Task.FromResult(result);
     }
 
+    /// <summary>
+    /// Получить заказ по id
+    /// </summary>
     public Task<Order?> Read(int entityId) =>
         Task.FromResult(_orders.FirstOrDefault(o => o.Id == entityId));
 
+    /// <summary>
+    /// Получить список всех заказов
+    /// </summary>
     public Task<IList<Order>> ReadAll() =>
         Task.FromResult<IList<Order>>([.. _orders]);
 
+    /// <summary>
+    /// Обновить существующий заказ
+    /// </summary>
     public Task<Order> Update(Order entity)
     {
         Delete(entity.Id);

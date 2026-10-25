@@ -4,8 +4,14 @@ using DryCleaner.Domain.Interfaces;
 
 namespace DryCleaner.Api;
 
+/// <summary>
+/// Статический класс для заполнения репозиториев тестовыми данными при запуске приложения
+/// </summary>
 public static class DataSeeder
 {
+    /// <summary>
+    /// Заполняет репозитории данными из DataSeed
+    /// </summary>
     public static async Task SeedAsync(IServiceProvider serviceProvider)
     {
         var clientRepo = serviceProvider.GetRequiredService<IRepository<Client, int>>();

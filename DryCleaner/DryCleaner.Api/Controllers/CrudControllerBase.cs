@@ -5,14 +5,22 @@ using System.Runtime.InteropServices;
 namespace DryCleaner.Api.Controllers;
 
 /// <summary>
-/// Базовый контроллер для CRUD-операций
+/// Базовый абстрактный контроллер для выполнения CRUD операций над сущностями
 /// </summary>
+/// <param name="appService">Сервис приложения для работы с сущностью</param>
+/// <param name="logger">Логгер для записи информации о запросах</param>
 [Route("api/[controller]")]
 [ApiController]
 public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     IApplicationService<TDto, TCreateUpdateDto, TKey> appService,
     ILogger<CrudControllerBase<TDto, TCreateUpdateDto, TKey>> logger) : ControllerBase
 {
+
+    /// <summary>
+    /// Создать новую запись
+    /// </summary>
+    /// <response code="201">Запись успешно создана</response>
+    /// <response code="500">Внутренняя ошибка сервера</response>
     [HttpPost]
     [ProducesResponseType(201)]
     [ProducesResponseType(500)]
@@ -32,6 +40,11 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
         }
     }
 
+    /// <summary>
+    /// Обновить существующую запись по id
+    /// </summary>
+    /// <response code="200">Запись успешно обновлена</response>
+    /// <response code="500">Внутренняя ошибка сервера</response>
     [HttpPut("{id}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(500)]
@@ -51,6 +64,11 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
         }
     }
 
+    /// <summary>
+    /// Удалить запись по id
+    /// </summary>
+    /// <response code="200">Запись успешно удалена</response>
+    /// <response code="500">Внутренняя ошибка сервера</response>
     [HttpDelete("{id}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(500)]
@@ -70,6 +88,11 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
         }
     }
 
+    /// <summary>
+    /// Получить список всех записей
+    /// </summary>
+    /// <response code="200">Список успешно получен</response>
+    /// <response code="500">Внутренняя ошибка сервера</response>
     [HttpGet]
     [ProducesResponseType(200)]
     [ProducesResponseType(500)]
@@ -89,6 +112,12 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
         }
     }
 
+    /// <summary>
+    /// Получить запись по id
+    /// </summary>
+    /// <response code="200">Запись успешно найдена</response>
+    /// <response code="404">Запись с указанным идентификатором не найдена</response>
+    /// <response code="500">Внутренняя ошибка сервера</response>
     [HttpGet("{id}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]

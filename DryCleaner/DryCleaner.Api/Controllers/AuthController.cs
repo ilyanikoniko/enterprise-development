@@ -6,12 +6,28 @@ using System.Text;
 
 namespace DryCleaner.Api.Controllers;
 
+/// <summary>
+/// Контроллер для аутентификации пользователей и выдачи JWT-токенов
+/// </summary>
+/// <param name="configuration">Конфигурация приложения</param>
 [Route("api/[controller]")]
 [ApiController]
 public class AuthController(IConfiguration configuration) : ControllerBase
 {
+    /// <summary>
+    /// Модель запроса на авторизацию
+    /// </summary>
+    /// <param name="Username">Имя пользователя</param>
+    /// <param name="Password">Пароль</param>
     public record LoginRequest(string Username, string Password);
 
+    /// <summary>
+    /// Вход в систему и выдача JWT-токена при успешной проверке учетных данных
+    /// </summary>
+    /// <param name="request">Данные для входа (логин и пароль)</param>
+    /// <returns>JWT-токен в случае успеха или статус 401 при неверных данных</returns>
+    /// <response code="200">Успешная авторизация, возвращен токен</response>
+    /// <response code="401">Неверный логин или пароль</response>
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequest request)
     {
@@ -23,6 +39,11 @@ public class AuthController(IConfiguration configuration) : ControllerBase
         return Unauthorized("Неверный логин или пароль");
     }
 
+    /// <summary>
+    /// Генерирует JWT-токен для указанного пользователя
+    /// </summary>
+    /// <param name="username">Имя пользователя, для которого создается токен</param>
+    /// <returns>Строка с закодированным JWT-токеном</returns>
     private string GenerateJwtToken(string username)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!));

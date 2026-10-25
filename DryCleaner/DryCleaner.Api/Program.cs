@@ -14,11 +14,12 @@ using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Добавляем контроллеры и Swagger
+// Настройка swagger и контроллеров
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
+    // Настройка кнопки Authorize для JWT токена в swagger
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -26,7 +27,7 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = Microsoft.OpenApi.ParameterLocation.Header,
-        Description = "Введите JWT токен (без слова 'Bearer', просто сам токен)."
+        Description = "Введите JWT токен"
     });
     options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
     {
@@ -34,12 +35,12 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// Регистрация репозиторией
 builder.Services.AddSingleton<ClientInMemoryRepository>();
 builder.Services.AddSingleton<ItemInMemoryRepository>();
 builder.Services.AddSingleton<OrderInMemoryRepository>();
 builder.Services.AddSingleton<CategoryInMemoryRepository>();
 
-// Теперь связываем интерфейсы с уже созданными экземплярами
 builder.Services.AddSingleton<IRepository<Client, int>>(sp => sp.GetRequiredService<ClientInMemoryRepository>());
 builder.Services.AddSingleton<IRepository<Item, int>>(sp => sp.GetRequiredService<ItemInMemoryRepository>());
 builder.Services.AddSingleton<IRepository<Order, int>>(sp => sp.GetRequiredService<OrderInMemoryRepository>());
@@ -52,14 +53,13 @@ builder.Services.AddSingleton<ICategoryRepository>(sp => sp.GetRequiredService<C
 
 builder.Services.AddSingleton<IAnalyticsService, AnalyticsService>();
 
-// ==========================================
-// РЕГИСТРАЦИЯ CRUD-СЕРВИСОВ
-// ==========================================
+// Регистрация CRUD сервисов
 builder.Services.AddSingleton<IApplicationService<ClientDto, ClientEditDto, int>, ClientService>();
 builder.Services.AddSingleton<IApplicationService<CategoryDto, CategoryEditDto, int>, CategoryService>();
 builder.Services.AddSingleton<IApplicationService<ItemDto, ItemCreateDto, int>, ItemService>();
 builder.Services.AddSingleton<IApplicationService<OrderDto, OrderCreateDto, int>, OrderService>();
 
+// Настройка аутентификации JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -75,7 +75,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Временный код для наполнения репозиториев при запуске
 // Заполняем базу при запуске
 var app = builder.Build();
 
@@ -84,7 +83,7 @@ using (var scope = app.Services.CreateScope())
     await DataSeeder.SeedAsync(scope.ServiceProvider);
 }
 
-
+// конвейер запросов
 app.UseSwagger();
 app.UseSwaggerUI();
 
