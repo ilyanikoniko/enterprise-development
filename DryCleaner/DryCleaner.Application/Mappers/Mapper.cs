@@ -96,8 +96,8 @@ public static class Mapper
     public static Order Map(OrderCreateDto dto) =>
         new() { 
             ClientId = dto.ClientId, 
-            ItemId = dto.ItemId, 
-            AcceptanceDate = dto.AcceptanceDate, 
+            ItemId = dto.ItemId,
+            AcceptanceDate = DateTime.Now,
             CompletionDays = dto.CompletionDays, 
             Status = Enum.Parse<OrderStatus>(dto.Status) 
         };

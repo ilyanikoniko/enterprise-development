@@ -20,13 +20,6 @@ public class OrderCreateDto
     public int ItemId { get; set; }
 
     /// <summary>
-    /// Дата приёма заказа
-    /// </summary>
-    [Range(typeof(DateTime), "2020-01-01", "2030-12-31",
-       ErrorMessage = "Дата должна быть в диапазоне 2020–2030")]
-    public DateTime AcceptanceDate { get; set; }
-
-    /// <summary>
     /// Срок выполнения в днях
     /// </summary>
     [Range(1, 365, ErrorMessage = "Срок должен быть от 1 до 365 дней")]
