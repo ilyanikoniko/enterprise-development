@@ -57,7 +57,7 @@ builder.Services.AddSingleton<IAnalyticsService, AnalyticsService>();
 builder.Services.AddSingleton<IApplicationService<ClientDto, ClientEditDto, int>, ClientService>();
 builder.Services.AddSingleton<IApplicationService<CategoryDto, CategoryEditDto, int>, CategoryService>();
 builder.Services.AddSingleton<IApplicationService<ItemDto, ItemCreateDto, int>, ItemService>();
-builder.Services.AddSingleton<IApplicationService<OrderDto, OrderCreateDto, int>, OrderService>();
+builder.Services.AddSingleton<IOrderService, OrderService>();
 
 // Настройка аутентификации JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

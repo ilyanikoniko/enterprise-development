@@ -10,7 +10,7 @@ namespace DryCleaner.Application.Services;
 /// Сервис для управления заказами
 /// </summary>
 public class OrderService(IRepository<Order, int> repository)
-    : IApplicationService<OrderDto, OrderCreateDto, int> 
+    : IOrderService
 {
     /// <summary>
     /// Создать новый заказ
@@ -55,4 +55,16 @@ public class OrderService(IRepository<Order, int> repository)
     /// Удалить заказ по id
     /// </summary>
     public async Task<bool> Delete(int id) => await repository.Delete(id);
+
+    /// <summary>
+    /// Получить список заказов конкретного клиента
+    /// </summary>
+    public async Task<IReadOnlyList<OrderDto>> GetByClientAsync(int clientId)
+    {
+        var orders = await repository.ReadAll();
+        return orders
+            .Where(o => o.ClientId == clientId)
+            .Select(Mapper.Map)
+            .ToList();
+    }
 }
