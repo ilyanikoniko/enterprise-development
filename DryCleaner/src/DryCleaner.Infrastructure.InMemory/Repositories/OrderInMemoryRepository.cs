@@ -9,6 +9,7 @@ namespace DryCleaner.Infrastructure.InMemory.Repositories;
 public class OrderInMemoryRepository : IOrderRepository
 {
     private readonly List<Order> _orders = [];
+    private int _nextId = 1;
 
     /// <summary>
     /// Создать новый заказ
@@ -17,8 +18,13 @@ public class OrderInMemoryRepository : IOrderRepository
     {
         if (entity.Id == 0)
         {
-            entity.Id = _orders.Any() ? _orders.Max(o => o.Id) + 1 : 1;
+            entity.Id = _nextId++;
         }
+        else if (entity.Id >= _nextId)
+        {
+            _nextId = entity.Id + 1;
+        }
+
         _orders.Add(entity);
         return Task.FromResult(entity);
     }

@@ -9,6 +9,7 @@ namespace DryCleaner.Infrastructure.InMemory.Repositories;
 public class CategoryInMemoryRepository : ICategoryRepository
 {
     private readonly List<Category> _categories = [];
+    private int _nextId = 1;
 
     /// <summary>
     /// Создать новую категорию
@@ -17,8 +18,13 @@ public class CategoryInMemoryRepository : ICategoryRepository
     {
         if (entity.Id == 0)
         {
-            entity.Id = _categories.Any() ? _categories.Max(c => c.Id) + 1 : 1;
+            entity.Id = _nextId++;
         }
+        else if (entity.Id >= _nextId)
+        {
+            _nextId = entity.Id + 1;
+        }
+
         _categories.Add(entity);
         return Task.FromResult(entity);
     }

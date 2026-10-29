@@ -9,6 +9,7 @@ namespace DryCleaner.Infrastructure.InMemory.Repositories;
 public class ItemInMemoryRepository : IItemRepository
 {
     private readonly List<Item> _items = [];
+    private int _nextId = 1;
 
     /// <summary>
     /// Создать новое изделие
@@ -17,8 +18,13 @@ public class ItemInMemoryRepository : IItemRepository
     {
         if (entity.Id == 0)
         {
-            entity.Id = _items.Any() ? _items.Max(i => i.Id) + 1 : 1;
+            entity.Id = _nextId++;
         }
+        else if (entity.Id >= _nextId)
+        {
+            _nextId = entity.Id + 1;
+        }
+
         _items.Add(entity);
         return Task.FromResult(entity);
     }

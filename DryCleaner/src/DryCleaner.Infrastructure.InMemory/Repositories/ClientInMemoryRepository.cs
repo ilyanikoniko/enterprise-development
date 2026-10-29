@@ -9,6 +9,7 @@ namespace DryCleaner.Infrastructure.InMemory.Repositories;
 public class ClientInMemoryRepository : IClientRepository
 {
     private readonly List<Client> _clients = [];
+    private int _nextId = 1;
 
     /// <summary>
     /// Создать нового клиента
@@ -17,7 +18,11 @@ public class ClientInMemoryRepository : IClientRepository
     {
         if (entity.Id == 0)
         {
-            entity.Id = _clients.Any() ? _clients.Max(c => c.Id) + 1 : 1;
+            entity.Id = _nextId++; 
+        }
+        else if (entity.Id >= _nextId)
+        {
+            _nextId = entity.Id + 1; 
         }
 
         _clients.Add(entity);
