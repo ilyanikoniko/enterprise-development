@@ -23,7 +23,7 @@ public class OrdersController(
     [ProducesResponseType(404)]
     public async Task<ActionResult<IReadOnlyList<OrderDto>>> GetByClient(int clientId)
     {
-        logger.LogInformation("Getting orders for client {ClientId}", clientId);
+        logger.LogInformation("Запрос заказов для клиента с ID {ClientId}", clientId);
         var orders = await crudService.GetByClientAsync(clientId);
 
         return orders.Count > 0 ? Ok(orders) : NotFound();

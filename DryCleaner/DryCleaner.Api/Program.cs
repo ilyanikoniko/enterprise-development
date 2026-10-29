@@ -26,6 +26,12 @@ builder.Services.AddSwaggerGen(options =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     options.IncludeXmlComments(xmlPath);
 
+    var contractsXml = Path.Combine(AppContext.BaseDirectory, "DryCleaner.Contracts.xml");
+    if (File.Exists(contractsXml))
+    {
+        options.IncludeXmlComments(contractsXml);
+    }
+
     // Настройка кнопки Authorize для JWT токена в swagger
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.OpenApiSecurityScheme
     {
