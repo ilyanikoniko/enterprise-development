@@ -1,6 +1,4 @@
-﻿using DryCleaner.Domain.Enums;
-
-namespace DryCleaner.Contracts.Dtos;
+﻿namespace DryCleaner.Contracts.Dtos.Orders;
 
 /// <summary>
 /// DTO заказа для чтения
@@ -13,5 +11,5 @@ public record OrderDto(
     string ItemName,
     DateTime AcceptanceDate,
     int CompletionDays,
-    OrderStatus Status
+    string Status
 );

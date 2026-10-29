@@ -1,4 +1,4 @@
-﻿using DryCleaner.Contracts.Dtos;
+﻿using DryCleaner.Contracts.Dtos.Orders;
 
 namespace DryCleaner.Contracts.Interfaces;
 

@@ -1,4 +1,4 @@
-﻿using DryCleaner.Contracts.Dtos;
+﻿using DryCleaner.Contracts.Dtos.Categories;
 using DryCleaner.Contracts.Interfaces;
 
 namespace DryCleaner.Api.Controllers;

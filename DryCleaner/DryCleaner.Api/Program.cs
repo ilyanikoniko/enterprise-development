@@ -1,8 +1,7 @@
 ﻿using DryCleaner.Api;
 using DryCleaner.Application.Services;
-using DryCleaner.Contracts.Dtos;
 using DryCleaner.Contracts.Interfaces;
-using DryCleaner.Domain.Data;       
+using DryCleaner.Domain.Data;
 using DryCleaner.Domain.Entities;
 using DryCleaner.Domain.Interfaces;
 using DryCleaner.Infrastructure.InMemory.Repositories;
@@ -11,6 +10,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi;
+using DryCleaner.Contracts.Dtos.Categories;
+using DryCleaner.Contracts.Dtos.Clients;
+using DryCleaner.Contracts.Dtos.Items;
 
 var builder = WebApplication.CreateBuilder(args);
 

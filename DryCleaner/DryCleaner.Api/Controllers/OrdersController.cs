@@ -1,6 +1,6 @@
-﻿using DryCleaner.Contracts.Dtos;
+﻿using DryCleaner.Contracts.Dtos.Orders;
 using DryCleaner.Contracts.Interfaces;
-using Microsoft.AspNetCore.Mvc; 
+using Microsoft.AspNetCore.Mvc;
 
 namespace DryCleaner.Api.Controllers;
 

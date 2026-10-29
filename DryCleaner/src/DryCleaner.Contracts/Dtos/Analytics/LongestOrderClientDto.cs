@@ -1,4 +1,4 @@
-﻿namespace DryCleaner.Contracts.Dtos;
+﻿namespace DryCleaner.Contracts.Dtos.Analytics;
 
 /// <summary>
 /// DTO для клиента с самым долгим заказом

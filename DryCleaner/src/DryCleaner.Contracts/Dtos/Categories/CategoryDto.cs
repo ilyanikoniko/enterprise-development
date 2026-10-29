@@ -1,4 +1,4 @@
-﻿namespace DryCleaner.Contracts.Dtos;
+﻿namespace DryCleaner.Contracts.Dtos.Categories;
 
 /// <summary>
 /// DTO категории для чтения

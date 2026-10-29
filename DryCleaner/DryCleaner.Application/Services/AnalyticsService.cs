@@ -1,5 +1,6 @@
 ﻿using DryCleaner.Application.Mappers;
-using DryCleaner.Contracts.Dtos;
+using DryCleaner.Contracts.Dtos.Analytics;
+using DryCleaner.Contracts.Dtos.Orders;
 using DryCleaner.Contracts.Interfaces;
 using DryCleaner.Domain.Entities;
 using DryCleaner.Domain.Enums;

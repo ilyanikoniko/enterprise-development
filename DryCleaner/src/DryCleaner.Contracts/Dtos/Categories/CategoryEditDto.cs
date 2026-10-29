@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DryCleaner.Contracts.Dtos;
+namespace DryCleaner.Contracts.Dtos.Categories;
 
 /// <summary>
 /// DTO категории (для создания/редактирования)

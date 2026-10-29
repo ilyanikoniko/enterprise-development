@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using DryCleaner.Domain.Enums;
 
-namespace DryCleaner.Contracts.Dtos;
+namespace DryCleaner.Contracts.Dtos.Orders;
 
 /// <summary>
 /// DTO заказа (для создания)
@@ -37,5 +36,5 @@ public class OrderCreateDto
     /// Статус заказа
     /// </summary>
     [Required(ErrorMessage = "Статус обязателен")]
-    public OrderStatus Status { get; set; }
+    public required string Status { get; set; }
 }

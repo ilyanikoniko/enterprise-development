@@ -1,5 +1,5 @@
 ﻿using DryCleaner.Application.Mappers;
-using DryCleaner.Contracts.Dtos;
+using DryCleaner.Contracts.Dtos.Categories;
 using DryCleaner.Contracts.Interfaces;
 using DryCleaner.Domain.Entities;
 using DryCleaner.Domain.Interfaces;

@@ -1,5 +1,9 @@
-﻿using DryCleaner.Contracts.Dtos;
+﻿using DryCleaner.Contracts.Dtos.Categories;
+using DryCleaner.Contracts.Dtos.Clients;
+using DryCleaner.Contracts.Dtos.Items;
+using DryCleaner.Contracts.Dtos.Orders;
 using DryCleaner.Domain.Entities;
+using DryCleaner.Domain.Enums;
 
 namespace DryCleaner.Application.Mappers;
 
@@ -84,13 +88,19 @@ public static class Mapper
             entity.Item?.Name ?? "Неизвестно",
             entity.AcceptanceDate,
             entity.CompletionDays,
-            entity.Status);
+            entity.Status.ToString());
 
     /// <summary>
     /// Преобразует DTO заказа (для создания) в доменную сущность
     /// </summary>
     public static Order Map(OrderCreateDto dto) =>
-        new() { ClientId = dto.ClientId, ItemId = dto.ItemId, AcceptanceDate = dto.AcceptanceDate, CompletionDays = dto.CompletionDays, Status = dto.Status };
+        new() { 
+            ClientId = dto.ClientId, 
+            ItemId = dto.ItemId, 
+            AcceptanceDate = dto.AcceptanceDate, 
+            CompletionDays = dto.CompletionDays, 
+            Status = Enum.Parse<OrderStatus>(dto.Status) 
+        };
 
     /// <summary>
     /// Преобразует коллекцию сущностей Order в коллекцию DTO

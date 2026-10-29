@@ -1,4 +1,4 @@
-﻿namespace DryCleaner.Contracts.Dtos;
+﻿namespace DryCleaner.Contracts.Dtos.Clients;
 
 /// <summary>
 /// DTO клиента для чтения
