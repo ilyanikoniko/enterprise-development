@@ -64,7 +64,7 @@ public class AnalyticsService(
         var orders = await orderRepository.ReadAll();
         var clients = await clientRepository.ReadAll();
 
-        if (!orders.Any()) return new List<LongestOrderClientDto>();
+        if (orders.Count == 0) return new List<LongestOrderClientDto>();
 
         var maxDays = orders.Max(o => o.CompletionDays);
 
