@@ -15,9 +15,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DryCleaner.Application\DryCleaner.Application.csproj" />
-    <ProjectReference Include="..\src\DryCleaner.Contracts\DryCleaner.Contracts.csproj" />
-    <ProjectReference Include="..\src\DryCleaner.Domain\DryCleaner.Domain.csproj" />
-    <ProjectReference Include="..\src\DryCleaner.Infrastructure.InMemory\DryCleaner.Infrastructure.InMemory.csproj" />
+    <ProjectReference Include="..\DryCleaner.Contracts\DryCleaner.Contracts.csproj" />
+    <ProjectReference Include="..\DryCleaner.Domain\DryCleaner.Domain.csproj" />
+    <ProjectReference Include="..\DryCleaner.Infrastructure.InMemory\DryCleaner.Infrastructure.InMemory.csproj" />
   </ItemGroup>
 
 </Project>

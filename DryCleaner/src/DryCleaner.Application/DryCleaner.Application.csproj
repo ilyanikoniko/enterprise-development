@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\DryCleaner.Contracts\DryCleaner.Contracts.csproj" />
-    <ProjectReference Include="..\src\DryCleaner.Domain\DryCleaner.Domain.csproj" />
+    <ProjectReference Include="..\DryCleaner.Contracts\DryCleaner.Contracts.csproj" />
+    <ProjectReference Include="..\DryCleaner.Domain\DryCleaner.Domain.csproj" />
   </ItemGroup>
 
 </Project>
