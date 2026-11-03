@@ -56,16 +56,10 @@ builder.Services.AddOpenApi(options =>
 });
 
 // Регистрация репозиториев
-builder.Services.AddSingleton<ClientInMemoryRepository>();
-builder.Services.AddSingleton<ItemInMemoryRepository>();
-builder.Services.AddSingleton<OrderInMemoryRepository>();
-builder.Services.AddSingleton<CategoryInMemoryRepository>();
-
-// Связываем конкретные интерфейсы с экземплярами
-builder.Services.AddSingleton<IClientRepository>(sp => sp.GetRequiredService<ClientInMemoryRepository>());
-builder.Services.AddSingleton<IItemRepository>(sp => sp.GetRequiredService<ItemInMemoryRepository>());
-builder.Services.AddSingleton<IOrderRepository>(sp => sp.GetRequiredService<OrderInMemoryRepository>());
-builder.Services.AddSingleton<ICategoryRepository>(sp => sp.GetRequiredService<CategoryInMemoryRepository>());
+builder.Services.AddSingleton<IClientRepository, ClientInMemoryRepository>();
+builder.Services.AddSingleton<IItemRepository, ItemInMemoryRepository>();
+builder.Services.AddSingleton<IOrderRepository, OrderInMemoryRepository>();
+builder.Services.AddSingleton<ICategoryRepository, CategoryInMemoryRepository>();
 
 builder.Services.AddSingleton<IAnalyticsService, AnalyticsService>();
 

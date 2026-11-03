@@ -19,19 +19,15 @@ public class OrdersController(
     /// </summary>
     /// <param name="clientId">Идентификатор клиента</param>
     /// <response code="200">Список успешно получен</response>
-    /// <response code="404">Заказы для клиента не найдены</response>
     [HttpGet("client/{clientId}")]
     [ProducesResponseType(200)]
-    [ProducesResponseType(404)]
     public async Task<ActionResult<IReadOnlyList<OrderDto>>> GetByClient(int clientId)
     {
         logger.LogInformation("Запрос заказов для клиента с ID {ClientId}", clientId);
 
         var orders = await crudService.GetByClientAsync(clientId);
 
-        if (orders.Count == 0)
-            throw new KeyNotFoundException($"Заказы для клиента с идентификатором {clientId} не найдены.");
-
+        // Если заказов нет, возвращаем пустой список (200 OK), а не 404
         return Ok(orders);
     }
 }
