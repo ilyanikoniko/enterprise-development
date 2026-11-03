@@ -136,77 +136,99 @@
 Если у вас появились идеи/пожелания/прочие полезные мысли по преподаваемой дисциплине, их можно оставить [здесь](https://github.com/itsecd/enterprise-development/discussions/categories/ideas).
 
 
-# Лабораторная работа №1 — Доменная модель «Химчистка»
+# Лабораторная работа №2 — REST API «Химчистка»
 
 Учебный проект по дисциплине «Разработка корпоративных приложений» на платформе .NET 10.
 
 ## Предметная область
 
 В базе данных химчистки хранятся сведения о принятых изделиях, клиентах и заказах.
-
-- **Изделие** характеризуется наименованием, категорией, материалом.
+- **Изделие** — наименование, категория, материал.
 - **Категория изделия** — справочник: название, рекомендуемый вид чистки, стоимость.
-- **Клиент** характеризуется ФИО, телефоном.
-- **Заказ** содержит информацию о клиенте, изделии, дате приёма, сроке выполнения, статусе.
+- **Клиент** — ФИО, телефон.
+- **Заказ** — клиент, изделие, дата приёма, срок выполнения, статус.
 
 Данные хранятся **в памяти** в виде коллекций.
 
 ## Технологии
 
 - .NET 10
+- ASP.NET Core Web API
+- JWT 
+- OpenAPI 
+- Scalar UI
 - xUnit v3
 - LINQ
 - GitHub Actions
 
+## Архитектура
+
+Проект разделён на слои (Clean Architecture):
+
+- **Domain** — доменные сущности (`Client`, `Order`, `Item`, `Category`), интерфейсы репозиториев, тестовые данные (`DataSeed`).
+- **Contracts** — DTO для чтения и записи, интерфейсы сервисов (`IApplicationService`, `IAnalyticsService`).
+- **Application** — бизнес-логика (сервисы `ClientService`, `OrderService` и т.д., `AnalyticsService`, `Mapper` для преобразования сущностей).
+- **Infrastructure.InMemory** — реализация репозиториев в памяти (`ClientInMemoryRepository` и т.д.).
+- **Api** — контроллеры (`CrudControllerBase`, `AnalyticsController`, `AuthController`), глобальный `ExceptionHandlingMiddleware`, настройка DI в `Program.cs`.
+- **Tests** — xUnit-тесты аналитических запросов.
+
 ## Структура
-```
+
+```text
 enterprise-development/
 ├── .github/
-│ └── workflows/
-│ └── tests.yml 
-│
-├── DryCleaner/
-│ ├── DryCleaner.Domain/
-│ │ ├── Entities/
-│ │ │ ├── Client.cs 
-│ │ │ ├── Category.cs 
-│ │ │ ├── Item.cs 
-│ │ │ └── Order.cs 
-│ │ ├── Enums/
-│ │ │ └── OrderStatus.cs 
-│ │ ├── Data/
-│ │ │ └── DataSeed.cs 
-│ │ └── DryCleaner.Domain.csproj
-│ │
-│ ├── DryCleaner.Tests/
-│ │ ├── AnalyticsTests.cs 
-│ │ ├── DryCleanerFixture.cs 
-│ │ └── DryCleaner.Tests.csproj
-│ │
-│ └── DryCleaner.slnx 
-│
+│   └── workflows/
+│       └── tests.yml
 ├── docs/
-│ ├── tests_results.png 
-│ └── solution_structure.png 
-│
+│   └── tests_results.png
+├── DryCleaner/
+│   ├── src/
+│   │   ├── DryCleaner.Domain/
+│   │   ├── DryCleaner.Contracts/
+│   │   ├── DryCleaner.Application/
+│   │   ├── DryCleaner.Infrastructure.InMemory/
+│   │   └── DryCleaner.Api/
+│   ├── tests/
+│   │   └── DryCleaner.Tests/
+│   └── DryCleaner.slnx
 └── README.md
 ```
 
-text
+## Функциональность
 
-## Тесты
+- **CRUD для всех сущностей** (реализован через базовый класс `CrudControllerBase`).
+- **Аналитика** (5 запросов из первой лабораторной):
+  - Заказы в обработке, упорядоченные по дате.
+  - Топ-5 клиентов по количеству заказов за период.
+  - Клиенты с самыми долгими заказами.
+  - Топ-5 популярных/непопулярных категорий за год.
+  - Клиент, потративший наибольшую сумму.
+- **Авторизация** — JWT-токены. Все контроллеры (кроме `Auth`) защищены атрибутом `[Authorize]`.
+- **Документация** — OpenAPI + Scalar UI.
 
-1. `OrdersInProgressSortedByAcceptanceDate` — заказы в обработке по дате.
-2. `Top5ClientsByOrdersCountForPeriod` — топ-5 клиентов за период.
-3. `ClientsWithLongestOrdersSortedByName` — долгие заказы, по ФИО.
-4. `Top5PopularAndUnpopularCategoriesForLastYear` — топ-5 категорий за год.
-5. `ClientWithMaxTotalSpent` — клиент с макс. суммой.
 
 ## Запуск
 
+1. Перейти в папку `src/DryCleaner.Api`.
+2. Запустить проект:
+   ```bash
+   dotnet run
+   ```
+3. Открыть в браузере: `https://localhost:51203/scalar`.
+4. Авторизоваться (метод `POST /api/Auth/login`):
+   - **Username:** `admin`
+   - **Password:** `password`
+5. Скопировать полученный токен и вставить его в поле **Bearer Token** в Scalar.
+
+
+## Тесты
+
+Запуск тестов:
+
 ```bash
-dotnet test DryCleaner/DryCleaner.Tests/DryCleaner.Tests.csproj
+dotnet test
 ```
+Тесты проверяют корректность аналитических запросов (5 тестов).
 
 ## Результаты тестов
 
