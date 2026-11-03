@@ -13,7 +13,7 @@ namespace DryCleaner.Application.Mappers;
 /// </summary>
 public static class Mapper
 {
-    // ================= КЛИЕНТЫ =================
+    #region Клиенты
 
     /// <summary>
     /// Преобразует сущность Client в DTO для чтения
@@ -33,8 +33,10 @@ public static class Mapper
     public static List<ClientDto> Map(IEnumerable<Client> entities) =>
         [.. entities.Select(Map)];
 
+    #endregion
 
-    // ================= КАТЕГОРИИ =================
+
+    #region Категории
 
     /// <summary>
     /// Преобразует сущность Category в DTO для чтения
@@ -54,8 +56,10 @@ public static class Mapper
     public static List<CategoryDto> Map(IEnumerable<Category> entities) =>
         [.. entities.Select(Map)];
 
+    #endregion
 
-    // ================= ИЗДЕЛИЯ =================
+
+    #region Изделия
 
     /// <summary>
     /// Преобразует сущность Iten в DTO для чтения
@@ -75,8 +79,10 @@ public static class Mapper
     public static List<ItemDto> Map(IEnumerable<Item> entities) =>
         [.. entities.Select(Map)];
 
+    #endregion
 
-    // ================= ЗАКАЗЫ =================
+
+    #region Заказы
 
     /// <summary>
     /// Преобразует сущность Order в DTO для чтения
@@ -111,4 +117,6 @@ public static class Mapper
     /// </summary>
     public static List<OrderDto> Map(IEnumerable<Order> entities) =>
         [.. entities.Select(Map)];
+
+    #endregion
 }
