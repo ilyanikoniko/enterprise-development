@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -29,6 +30,7 @@ public class AuthController(IConfiguration configuration) : ControllerBase
     /// <response code="200">Успешная авторизация, возвращен токен</response>
     /// <response code="401">Неверный логин или пароль</response>
     [HttpPost("login")]
+    [AllowAnonymous]
     public IActionResult Login([FromBody] LoginRequest request)
     {
         if (request.Username == "admin" && request.Password == "password")

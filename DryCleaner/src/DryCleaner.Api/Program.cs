@@ -1,5 +1,4 @@
-﻿using Microsoft.OpenApi;
-using DryCleaner.Api;
+﻿using DryCleaner.Api;
 using DryCleaner.Application.Services;
 using DryCleaner.Contracts.Dtos.Categories;
 using DryCleaner.Contracts.Dtos.Clients;
@@ -9,7 +8,9 @@ using DryCleaner.Domain.Entities;
 using DryCleaner.Domain.Interfaces;
 using DryCleaner.Infrastructure.InMemory.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 using Scalar.AspNetCore; 
 using System.Text;
 

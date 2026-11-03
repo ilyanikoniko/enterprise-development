@@ -1,5 +1,6 @@
 ﻿using DryCleaner.Contracts.Dtos.Orders;
 using DryCleaner.Contracts.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DryCleaner.Api.Controllers;
@@ -7,6 +8,7 @@ namespace DryCleaner.Api.Controllers;
 /// <summary>
 /// Контроллер для работы с заказами
 /// </summary>
+[Authorize]
 public class OrdersController(
     IOrderService crudService,
     ILogger<OrdersController> logger)
