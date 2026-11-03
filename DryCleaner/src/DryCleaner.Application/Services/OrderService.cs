@@ -49,6 +49,10 @@ public class OrderService(
     /// </summary>
     public async Task<OrderDto> Update(OrderCreateDto dto, int id)
     {
+        var existing = await repository.Read(id);
+        if (existing == null)
+            throw new KeyNotFoundException($"Заказ с идентификатором {id} не найден.");
+
         await ValidateReferencesAsync(dto);
         var updatedOrder = Mapper.Map(dto);
         updatedOrder.Id = id;
@@ -59,13 +63,24 @@ public class OrderService(
     /// <summary>
     /// Удалить заказ по id
     /// </summary>
-    public async Task<bool> Delete(int id) => await repository.Delete(id);
+    public async Task<bool> Delete(int id)
+    {
+        var existing = await repository.Read(id);
+        if (existing == null)
+            throw new KeyNotFoundException($"Заказ с идентификатором {id} не найден.");
+
+        return await repository.Delete(id);
+    }
 
     /// <summary>
     /// Получить список заказов конкретного клиента
     /// </summary>
     public async Task<IReadOnlyList<OrderDto>> GetByClientAsync(int clientId)
     {
+        var client = await clientRepository.Read(clientId);
+        if (client == null)
+            throw new KeyNotFoundException($"Клиент с идентификатором {clientId} не найден.");
+
         var orders = await repository.ReadAll();
         return orders
             .Where(o => o.ClientId == clientId)

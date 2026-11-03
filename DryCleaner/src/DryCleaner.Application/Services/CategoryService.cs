@@ -46,6 +46,10 @@ public class CategoryService(IRepository<Category, int> repository)
     /// </summary>
     public async Task<CategoryDto> Update(CategoryEditDto dto, int id)
     {
+        var existing = await repository.Read(id);
+        if (existing == null)
+            throw new KeyNotFoundException($"Категория с идентификатором {id} не найдена");
+
         var entity = Mapper.Map(dto);
         entity.Id = id;
 
@@ -56,5 +60,12 @@ public class CategoryService(IRepository<Category, int> repository)
     /// <summary>
     /// Удалить категорию по идентификатору
     /// </summary>
-    public async Task<bool> Delete(int id) => await repository.Delete(id);
+    public async Task<bool> Delete(int id)
+    {
+        var existing = await repository.Read(id);
+        if (existing == null)
+            throw new KeyNotFoundException($"Категория с идентификатором {id} не найдена");
+
+        return await repository.Delete(id);
+    }
 }

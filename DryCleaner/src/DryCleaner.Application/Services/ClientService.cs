@@ -46,6 +46,10 @@ public class ClientService(IRepository<Client, int> clientRepository)
     /// </summary>
     public async Task<ClientDto> Update(ClientEditDto dto, int id)
     {
+        var existing = await clientRepository.Read(id);
+        if (existing == null)
+            throw new KeyNotFoundException($"Клиент с идентификатором {id} не найден.");
+
         var updatedClient = Mapper.Map(dto);
         updatedClient.Id = id;
 
@@ -56,5 +60,12 @@ public class ClientService(IRepository<Client, int> clientRepository)
     /// <summary>
     /// Удалить клиента по id
     /// </summary>
-    public async Task<bool> Delete(int id) => await clientRepository.Delete(id);
+    public async Task<bool> Delete(int id)
+    {
+        var existing = await clientRepository.Read(id);
+        if (existing == null)
+            throw new KeyNotFoundException($"Клиент с идентификатором {id} не найден.");
+
+        return await clientRepository.Delete(id);
+    }
 }

@@ -1,4 +1,5 @@
-﻿using DryCleaner.Contracts.Dtos.Categories;
+﻿using DryCleaner.Application.Exceptions;
+using DryCleaner.Contracts.Dtos.Categories;
 using DryCleaner.Contracts.Dtos.Clients;
 using DryCleaner.Contracts.Dtos.Items;
 using DryCleaner.Contracts.Dtos.Orders;
@@ -94,13 +95,16 @@ public static class Mapper
     /// Преобразует DTO заказа (для создания) в доменную сущность
     /// </summary>
     public static Order Map(OrderCreateDto dto) =>
-        new() { 
-            ClientId = dto.ClientId, 
-            ItemId = dto.ItemId,
-            AcceptanceDate = DateTime.Now,
-            CompletionDays = dto.CompletionDays, 
-            Status = Enum.Parse<OrderStatus>(dto.Status) 
-        };
+    new()
+    {
+        ClientId = dto.ClientId,
+        ItemId = dto.ItemId,
+        AcceptanceDate = DateTime.Now,
+        CompletionDays = dto.CompletionDays,
+        Status = Enum.TryParse<OrderStatus>(dto.Status, true, out var status)
+            ? status
+            : throw new BadRequestException($"Недопустимый статус заказа: '{dto.Status}'. Допустимые значения: Accepted, InProgress, Ready, Completed, Cancelled.")
+    };
 
     /// <summary>
     /// Преобразует коллекцию сущностей Order в коллекцию DTO

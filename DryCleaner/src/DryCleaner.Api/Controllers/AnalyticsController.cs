@@ -32,21 +32,14 @@ public class AnalyticsController(
     [ProducesResponseType(500)]
     public async Task<ActionResult<IReadOnlyList<OrderDto>>> GetOrdersInProgress()
     {
-        logger.LogInformation("Вызван метод {method} контроллера {controller}", 
+        logger.LogInformation("Вызван метод {method} контроллера {controller}",
             nameof(GetOrdersInProgress), GetType().Name);
-        try
-        {
-            var res = await service.GetOrdersInProgressAsync();
-            logger.LogInformation("Метод {method} контроллера {controller} успешно выполнен", 
-                nameof(GetOrdersInProgress), GetType().Name);
-            return res.Count > 0 ? Ok(res) : NoContent();
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Ошибка при выполнении метода {method} контроллера {controller}", 
-                nameof(GetOrdersInProgress), GetType().Name);
-            return StatusCode(500, "Внутренняя ошибка сервера. Пожалуйста, повторите попытку позже.");
-        }
+
+        var res = await service.GetOrdersInProgressAsync();
+
+        logger.LogInformation("Метод {method} контроллера {controller} успешно выполнен",
+            nameof(GetOrdersInProgress), GetType().Name);
+        return res.Count > 0 ? Ok(res) : NoContent();
     }
 
     /// <summary>
@@ -61,21 +54,14 @@ public class AnalyticsController(
     [ProducesResponseType(500)]
     public async Task<ActionResult<IReadOnlyList<TopClientDto>>> GetTop5Clients([FromQuery] DateTime from, [FromQuery] DateTime to)
     {
-        logger.LogInformation("Вызван метод {method} контроллера {controller} с параметрами: с {from} по {to}", 
+        logger.LogInformation("Вызван метод {method} контроллера {controller} с параметрами: с {from} по {to}",
             nameof(GetTop5Clients), GetType().Name, from, to);
-        try
-        {
-            var res = await service.GetTop5ClientsAsync(from, to);
-            logger.LogInformation("Метод {method} контроллера {controller} успешно выполнен", 
-                nameof(GetTop5Clients), GetType().Name);
-            return res.Count > 0 ? Ok(res) : NoContent();
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Ошибка при выполнении метода {method} контроллера {controller}", 
-                nameof(GetTop5Clients), GetType().Name);
-            return StatusCode(500, "Внутренняя ошибка сервера. Пожалуйста, повторите попытку позже.");
-        }
+
+        var res = await service.GetTop5ClientsAsync(from, to);
+
+        logger.LogInformation("Метод {method} контроллера {controller} успешно выполнен",
+            nameof(GetTop5Clients), GetType().Name);
+        return res.Count > 0 ? Ok(res) : NoContent();
     }
 
     /// <summary>
@@ -88,21 +74,14 @@ public class AnalyticsController(
     [ProducesResponseType(500)]
     public async Task<ActionResult<IReadOnlyList<LongestOrderClientDto>>> GetLongestOrders()
     {
-        logger.LogInformation("Вызван метод {method} контроллера {controller}", 
+        logger.LogInformation("Вызван метод {method} контроллера {controller}",
             nameof(GetLongestOrders), GetType().Name);
-        try
-        {
-            var res = await service.GetClientsWithLongestOrdersAsync();
-            logger.LogInformation("Метод {method} контроллера {controller} успешно выполнен", 
-                nameof(GetLongestOrders), GetType().Name);
-            return res.Count > 0 ? Ok(res) : NoContent();
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Ошибка при выполнении метода {method} контроллера {controller}", 
-                nameof(GetLongestOrders), GetType().Name);
-            return StatusCode(500, "Внутренняя ошибка сервера. Пожалуйста, повторите попытку позже.");
-        }
+
+        var res = await service.GetClientsWithLongestOrdersAsync();
+
+        logger.LogInformation("Метод {method} контроллера {controller} успешно выполнен",
+            nameof(GetLongestOrders), GetType().Name);
+        return res.Count > 0 ? Ok(res) : NoContent();
     }
 
     /// <summary>
@@ -116,21 +95,14 @@ public class AnalyticsController(
     [ProducesResponseType(500)]
     public async Task<ActionResult<CategoryStatDto>> GetTop5Categories([FromQuery] DateTime from, [FromQuery] DateTime to)
     {
-        logger.LogInformation("Вызван метод {method} контроллера {controller} с параметрами: с {from} по {to}", 
+        logger.LogInformation("Вызван метод {method} контроллера {controller} с параметрами: с {from} по {to}",
             nameof(GetTop5Categories), GetType().Name, from, to);
-        try
-        {
-            var res = await service.GetTop5CategoriesAsync(from, to);
-            logger.LogInformation("Метод {method} контроллера {controller} успешно выполнен", 
-                nameof(GetTop5Categories), GetType().Name);
-            return Ok(res);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Ошибка при выполнении метода {method} контроллера {controller}", 
-                nameof(GetTop5Categories), GetType().Name);
-            return StatusCode(500, "Внутренняя ошибка сервера. Пожалуйста, повторите попытку позже.");
-        }
+
+        var res = await service.GetTop5CategoriesAsync(from, to);
+
+        logger.LogInformation("Метод {method} контроллера {controller} успешно выполнен",
+            nameof(GetTop5Categories), GetType().Name);
+        return Ok(res);
     }
 
     /// <summary>
@@ -143,20 +115,13 @@ public class AnalyticsController(
     [ProducesResponseType(500)]
     public async Task<ActionResult<MaxSpenderDto>> GetMaxSpender()
     {
-        logger.LogInformation("Вызван метод {method} контроллера {controller}", 
+        logger.LogInformation("Вызван метод {method} контроллера {controller}",
             nameof(GetMaxSpender), GetType().Name);
-        try
-        {
-            var res = await service.GetMaxSpenderAsync();
-            logger.LogInformation("Метод {method} контроллера {controller} успешно выполнен", 
-                nameof(GetMaxSpender), GetType().Name);
-            return res != null ? Ok(res) : NoContent();
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Ошибка при выполнении метода {method} контроллера {controller}", 
-                nameof(GetMaxSpender), GetType().Name);
-            return StatusCode(500, "Внутренняя ошибка сервера. Пожалуйста, повторите попытку позже.");
-        }
+
+        var res = await service.GetMaxSpenderAsync();
+
+        logger.LogInformation("Метод {method} контроллера {controller} успешно выполнен",
+            nameof(GetMaxSpender), GetType().Name);
+        return res != null ? Ok(res) : NoContent();
     }
 }

@@ -8,7 +8,7 @@ namespace DryCleaner.Api.Controllers;
 /// Контроллер для работы с заказами
 /// </summary>
 public class OrdersController(
-    IOrderService crudService, 
+    IOrderService crudService,
     ILogger<OrdersController> logger)
     : CrudControllerBase<OrderDto, OrderCreateDto, int>(crudService, logger)
 {
@@ -24,8 +24,12 @@ public class OrdersController(
     public async Task<ActionResult<IReadOnlyList<OrderDto>>> GetByClient(int clientId)
     {
         logger.LogInformation("Запрос заказов для клиента с ID {ClientId}", clientId);
+
         var orders = await crudService.GetByClientAsync(clientId);
 
-        return orders.Count > 0 ? Ok(orders) : NotFound();
+        if (orders.Count == 0)
+            throw new KeyNotFoundException($"Заказы для клиента с идентификатором {clientId} не найдены.");
+
+        return Ok(orders);
     }
 }

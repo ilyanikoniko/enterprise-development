@@ -1,54 +1,60 @@
-﻿using DryCleaner.Api;
+﻿using Microsoft.OpenApi;
+using DryCleaner.Api;
 using DryCleaner.Application.Services;
-using DryCleaner.Contracts.Interfaces;
-using DryCleaner.Domain.Data;
-using DryCleaner.Domain.Entities;
-using DryCleaner.Domain.Interfaces;
-using DryCleaner.Infrastructure.InMemory.Repositories;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.OpenApi;
 using DryCleaner.Contracts.Dtos.Categories;
 using DryCleaner.Contracts.Dtos.Clients;
 using DryCleaner.Contracts.Dtos.Items;
+using DryCleaner.Contracts.Interfaces;
+using DryCleaner.Domain.Entities;
+using DryCleaner.Domain.Interfaces;
+using DryCleaner.Infrastructure.InMemory.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore; 
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Настройка swagger и контроллеров
+// Настройка контроллеров
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
+
+// Генерация спецификации OpenApi (встроенная от Microsoft)
+builder.Services.AddOpenApi(options =>
 {
-    // Подключение XML-комментариев для Swagger
-    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    options.IncludeXmlComments(xmlPath);
+    // Настройка безопасности в OpenApi (аналог кнопки Authorize)
+    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    {
+        // В новых версиях Components нужно инициализировать
+        document.Components ??= new OpenApiComponents();
 
-    var contractsXml = Path.Combine(AppContext.BaseDirectory, "DryCleaner.Contracts.xml");
-    if (File.Exists(contractsXml))
-    {
-        options.IncludeXmlComments(contractsXml);
-    }
+        // Добавляем схему Bearer
+        document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
+        document.Components.SecuritySchemes["Bearer"] = new OpenApiSecurityScheme
+        {
+            Type = SecuritySchemeType.Http,
+            Scheme = "bearer",
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Description = "Введите JWT токен"
+        };
 
-    // Настройка кнопки Authorize для JWT токена в swagger
-    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = Microsoft.OpenApi.SecuritySchemeType.Http,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = Microsoft.OpenApi.ParameterLocation.Header,
-        Description = "Введите JWT токен"
-    });
-    options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
-    {
-        [new OpenApiSecuritySchemeReference("Bearer", document)] = []
+        // Применяем требование безопасности глобально (в новых версиях используется document.Security)
+        document.Security ??= new List<OpenApiSecurityRequirement>();
+        document.Security.Add(new OpenApiSecurityRequirement
+            {
+                {
+                    // Используем новый класс ссылки, передавая имя схемы и сам документ
+                    new OpenApiSecuritySchemeReference("Bearer", document),
+                    new List<string>()
+                }
+            });
+
+        return Task.CompletedTask;
     });
 });
 
-// Регистрация репозиторией
+// Регистрация репозиториев
 builder.Services.AddSingleton<ClientInMemoryRepository>();
 builder.Services.AddSingleton<ItemInMemoryRepository>();
 builder.Services.AddSingleton<OrderInMemoryRepository>();
@@ -88,18 +94,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Заполняем базу при запуске
 var app = builder.Build();
 
+// Заполняем базу при запуске
 using (var scope = app.Services.CreateScope())
 {
     await DataSeeder.SeedAsync(scope.ServiceProvider);
 }
 
-// конвейер запросов
-app.UseSwagger();
-app.UseSwaggerUI();
+app.UseMiddleware<DryCleaner.Api.Middleware.ExceptionHandlingMiddleware>();
 
+app.MapOpenApi(); 
+app.MapScalarApiReference(); 
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

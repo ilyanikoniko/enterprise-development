@@ -5,6 +5,4 @@ namespace DryCleaner.Domain.Interfaces;
 /// <summary>
 /// Репозиторий категорий
 /// </summary>
-public interface ICategoryRepository : IRepository<Category, int>
-{
-}
+public interface ICategoryRepository : IRepository<Category, int>;
