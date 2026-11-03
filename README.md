@@ -220,6 +220,16 @@ enterprise-development/
    - **Password:** `password`
 5. Скопировать полученный токен и вставить его в поле **Bearer Token** в Scalar.
 
+![auth_login](./docs/auth_login.jpg)
+
+![auth_token](./docs/auth_token.jpg)
+
+## Пример работы API
+
+Ниже приведен пример работы метода аналитики `GET /api/Analytics/orders-in-progress` в интерфейсе Scalar. 
+Метод возвращает список заказов, находящихся в обработке, отсортированных по дате приема.
+
+![scalar_example](./docs/scalar_example.jpg)
 
 ## Тесты
 
