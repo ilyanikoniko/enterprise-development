@@ -14,10 +14,10 @@ public static class DataSeeder
     /// </summary>
     public static async Task SeedAsync(IServiceProvider serviceProvider)
     {
-        var clientRepo = serviceProvider.GetRequiredService<IRepository<Client, int>>();
-        var itemRepo = serviceProvider.GetRequiredService<IRepository<Item, int>>();
-        var orderRepo = serviceProvider.GetRequiredService<IRepository<Order, int>>();
-        var categoryRepo = serviceProvider.GetRequiredService<IRepository<Category, int>>();
+        var clientRepo = serviceProvider.GetRequiredService<IClientRepository>();
+        var itemRepo = serviceProvider.GetRequiredService<IItemRepository>();
+        var orderRepo = serviceProvider.GetRequiredService<IOrderRepository>();
+        var categoryRepo = serviceProvider.GetRequiredService<ICategoryRepository>();
 
         foreach (var c in DataSeed.Categories) await categoryRepo.Create(c);
         foreach (var c in DataSeed.Clients) await clientRepo.Create(c);

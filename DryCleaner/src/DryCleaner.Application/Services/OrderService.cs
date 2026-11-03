@@ -10,9 +10,9 @@ namespace DryCleaner.Application.Services;
 /// Сервис для управления заказами
 /// </summary>
 public class OrderService(
-    IRepository<Order, int> repository,
-    IRepository<Client, int> clientRepository,
-    IRepository<Item, int> itemRepository)
+    IOrderRepository repository,
+    IClientRepository clientRepository,
+    IItemRepository itemRepository)
     : IOrderService
 {
     /// <summary>

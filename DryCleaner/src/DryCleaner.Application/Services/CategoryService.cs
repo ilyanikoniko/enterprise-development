@@ -10,7 +10,7 @@ namespace DryCleaner.Application.Services;
 /// Сервис для управления категориями изделий
 /// </summary>
 /// <param name="repository">Репозиторий категорий</param>
-public class CategoryService(IRepository<Category, int> repository)
+public class CategoryService(ICategoryRepository repository)
     : IApplicationService<CategoryDto, CategoryEditDto, int>
 {
     /// <summary>

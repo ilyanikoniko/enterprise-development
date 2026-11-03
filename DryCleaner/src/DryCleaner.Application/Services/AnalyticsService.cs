@@ -13,9 +13,9 @@ namespace DryCleaner.Application.Services;
 /// </summary>
 public class AnalyticsService(
     IOrderRepository orderRepository,
-    IRepository<Client, int> clientRepository,
-    IRepository<Item, int> itemRepository,
-    IRepository<Category, int> categoryRepository) : IAnalyticsService
+    IClientRepository clientRepository,
+    IItemRepository itemRepository,
+    ICategoryRepository categoryRepository) : IAnalyticsService
 {
 
     /// <summary>

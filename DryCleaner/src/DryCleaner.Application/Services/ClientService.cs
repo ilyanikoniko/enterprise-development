@@ -10,7 +10,7 @@ namespace DryCleaner.Application.Services;
 /// Сервис для управления клиентами химчистки
 /// </summary>
 /// <param name="clientRepository">Репозиторий клиентов</param>
-public class ClientService(IRepository<Client, int> clientRepository)
+public class ClientService(IClientRepository clientRepository)
     : IApplicationService<ClientDto, ClientEditDto, int>
 {
     /// <summary>

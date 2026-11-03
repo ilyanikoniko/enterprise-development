@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-using Scalar.AspNetCore; 
+using Scalar.AspNetCore;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,13 +43,13 @@ builder.Services.AddOpenApi(options =>
         // Применяем требование безопасности глобально (в новых версиях используется document.Security)
         document.Security ??= new List<OpenApiSecurityRequirement>();
         document.Security.Add(new OpenApiSecurityRequirement
+        {
             {
-                {
-                    // Используем новый класс ссылки, передавая имя схемы и сам документ
-                    new OpenApiSecuritySchemeReference("Bearer", document),
-                    new List<string>()
-                }
-            });
+                // Используем новый класс ссылки, передавая имя схемы и сам документ
+                new OpenApiSecuritySchemeReference("Bearer", document),
+                new List<string>()
+            }
+        });
 
         return Task.CompletedTask;
     });
@@ -61,11 +61,7 @@ builder.Services.AddSingleton<ItemInMemoryRepository>();
 builder.Services.AddSingleton<OrderInMemoryRepository>();
 builder.Services.AddSingleton<CategoryInMemoryRepository>();
 
-builder.Services.AddSingleton<IRepository<Client, int>>(sp => sp.GetRequiredService<ClientInMemoryRepository>());
-builder.Services.AddSingleton<IRepository<Item, int>>(sp => sp.GetRequiredService<ItemInMemoryRepository>());
-builder.Services.AddSingleton<IRepository<Order, int>>(sp => sp.GetRequiredService<OrderInMemoryRepository>());
-builder.Services.AddSingleton<IRepository<Category, int>>(sp => sp.GetRequiredService<CategoryInMemoryRepository>());
-
+// Связываем конкретные интерфейсы с экземплярами
 builder.Services.AddSingleton<IClientRepository>(sp => sp.GetRequiredService<ClientInMemoryRepository>());
 builder.Services.AddSingleton<IItemRepository>(sp => sp.GetRequiredService<ItemInMemoryRepository>());
 builder.Services.AddSingleton<IOrderRepository>(sp => sp.GetRequiredService<OrderInMemoryRepository>());
@@ -105,8 +101,8 @@ using (var scope = app.Services.CreateScope())
 
 app.UseMiddleware<DryCleaner.Api.Middleware.ExceptionHandlingMiddleware>();
 
-app.MapOpenApi(); 
-app.MapScalarApiReference(); 
+app.MapOpenApi();
+app.MapScalarApiReference();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

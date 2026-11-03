@@ -9,7 +9,7 @@ namespace DryCleaner.Application.Services;
 /// <summary>
 /// Сервис для управления изделиями
 /// </summary>
-public class ItemService(IRepository<Item, int> repository, IRepository<Category, int> categoryRepository) 
+public class ItemService(IItemRepository repository, ICategoryRepository categoryRepository)
     : IApplicationService<ItemDto, ItemCreateDto, int>
 {
     /// <summary>
