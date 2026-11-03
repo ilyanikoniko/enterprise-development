@@ -59,8 +59,11 @@ public class OrderInMemoryRepository : IOrderRepository
     /// </summary>
     public Task<Order> Update(Order entity)
     {
-        Delete(entity.Id);
-        Create(entity);
+        var index = _orders.FindIndex(o => o.Id == entity.Id);
+        if (index != -1)
+        {
+            _orders[index] = entity;
+        }
         return Task.FromResult(entity);
     }
 }

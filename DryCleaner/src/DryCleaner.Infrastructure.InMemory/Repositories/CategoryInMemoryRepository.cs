@@ -59,8 +59,11 @@ public class CategoryInMemoryRepository : ICategoryRepository
     /// </summary>
     public Task<Category> Update(Category entity)
     {
-        Delete(entity.Id);
-        Create(entity);
+        var index = _categories.FindIndex(c => c.Id == entity.Id);
+        if (index != -1)
+        {
+            _categories[index] = entity;
+        }
         return Task.FromResult(entity);
     }
 }

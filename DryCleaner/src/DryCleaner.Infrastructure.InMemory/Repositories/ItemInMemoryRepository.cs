@@ -59,8 +59,11 @@ public class ItemInMemoryRepository : IItemRepository
     /// </summary>
     public Task<Item> Update(Item entity)
     {
-        Delete(entity.Id);
-        Create(entity);
+        var index = _items.FindIndex(i => i.Id == entity.Id);
+        if (index != -1)
+        {
+            _items[index] = entity;
+        }
         return Task.FromResult(entity);
     }
 }

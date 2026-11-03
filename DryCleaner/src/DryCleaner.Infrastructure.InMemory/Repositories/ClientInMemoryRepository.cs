@@ -59,8 +59,11 @@ public class ClientInMemoryRepository : IClientRepository
     /// </summary>
     public Task<Client> Update(Client entity)
     {
-        Delete(entity.Id);
-        Create(entity);
+        var index = _clients.FindIndex(c => c.Id == entity.Id);
+        if (index != -1)
+        {
+            _clients[index] = entity;
+        }
         return Task.FromResult(entity);
     }
 }
