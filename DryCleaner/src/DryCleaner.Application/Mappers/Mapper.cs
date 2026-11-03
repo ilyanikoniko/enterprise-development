@@ -105,11 +105,11 @@ public static class Mapper
     {
         ClientId = dto.ClientId,
         ItemId = dto.ItemId,
-        AcceptanceDate = DateTime.Now,
         CompletionDays = dto.CompletionDays,
         Status = Enum.TryParse<OrderStatus>(dto.Status, true, out var status)
             ? status
-            : throw new BadRequestException($"Недопустимый статус заказа: '{dto.Status}'. Допустимые значения: Accepted, InProgress, Ready, Completed, Cancelled.")
+            : throw new BadRequestException($"Недопустимый статус заказа: '{dto.Status}'. " +
+                $"Допустимые значения: Accepted, InProgress, Ready, Completed, Cancelled.")
     };
 
     /// <summary>

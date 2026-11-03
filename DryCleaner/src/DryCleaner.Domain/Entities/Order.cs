@@ -35,7 +35,7 @@ public class Order
     /// <summary>
     /// Дата приёма заказа
     /// </summary>
-    public required DateTime AcceptanceDate { get; set; }
+    public DateTime AcceptanceDate { get; set; }
 
     /// <summary>
     /// Срок выполнения в днях

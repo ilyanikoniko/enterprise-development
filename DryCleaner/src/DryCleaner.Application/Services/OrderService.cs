@@ -22,6 +22,7 @@ public class OrderService(
     {
         await ValidateReferencesAsync(dto);
         var order = Mapper.Map(dto);
+        order.AcceptanceDate = DateTime.Now;
         var result = await repository.Create(order);
         return Mapper.Map(result);
     }
@@ -56,6 +57,7 @@ public class OrderService(
         await ValidateReferencesAsync(dto);
         var updatedOrder = Mapper.Map(dto);
         updatedOrder.Id = id;
+        updatedOrder.AcceptanceDate = existing.AcceptanceDate;
         var result = await repository.Update(updatedOrder);
         return Mapper.Map(result);
     }
