@@ -16,20 +16,15 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Настройка контроллеров
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// Генерация спецификации OpenApi (встроенная от Microsoft)
 builder.Services.AddOpenApi(options =>
 {
-    // Настройка безопасности в OpenApi (аналог кнопки Authorize)
     options.AddDocumentTransformer((document, context, cancellationToken) =>
     {
-        // В новых версиях Components нужно инициализировать
         document.Components ??= new OpenApiComponents();
 
-        // Добавляем схему Bearer
         document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
         document.Components.SecuritySchemes["Bearer"] = new OpenApiSecurityScheme
         {
@@ -40,12 +35,10 @@ builder.Services.AddOpenApi(options =>
             Description = "Введите JWT токен"
         };
 
-        // Применяем требование безопасности глобально (в новых версиях используется document.Security)
         document.Security ??= new List<OpenApiSecurityRequirement>();
         document.Security.Add(new OpenApiSecurityRequirement
         {
             {
-                // Используем новый класс ссылки, передавая имя схемы и сам документ
                 new OpenApiSecuritySchemeReference("Bearer", document),
                 new List<string>()
             }

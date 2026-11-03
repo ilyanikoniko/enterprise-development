@@ -27,7 +27,6 @@ public class OrdersController(
 
         var orders = await crudService.GetByClientAsync(clientId);
 
-        // Если заказов нет, возвращаем пустой список (200 OK), а не 404
         return Ok(orders);
     }
 }

@@ -33,7 +33,8 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
         catch (Exception ex) 
         {
             logger.LogError(ex, "Внутренняя ошибка сервера");
-            await HandleExceptionAsync(context, HttpStatusCode.InternalServerError, "Внутренняя ошибка сервера. Пожалуйста, повторите попытку позже.");
+            await HandleExceptionAsync(context, HttpStatusCode.InternalServerError, "Внутренняя ошибка сервера. " +
+                "Пожалуйста, повторите попытку позже.");
         }
     }
 
