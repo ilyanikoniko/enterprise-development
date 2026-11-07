@@ -19,10 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DryCleaner.Infrastructure.EFCore\DryCleaner.Infrastructure.EFCore.csproj" />
     <ProjectReference Include="..\DryCleaner.Application\DryCleaner.Application.csproj" />
     <ProjectReference Include="..\DryCleaner.Contracts\DryCleaner.Contracts.csproj" />
     <ProjectReference Include="..\DryCleaner.Domain\DryCleaner.Domain.csproj" />
-    <ProjectReference Include="..\DryCleaner.Infrastructure.InMemory\DryCleaner.Infrastructure.InMemory.csproj" />
   </ItemGroup>
 
 </Project>

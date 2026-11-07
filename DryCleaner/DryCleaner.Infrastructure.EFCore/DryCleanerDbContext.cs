@@ -16,11 +16,9 @@ public class DryCleanerDbContext(DbContextOptions<DryCleanerDbContext> options) 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Настройка сущностей и связей
         modelBuilder.Entity<Category>(builder =>
         {
             builder.HasKey(c => c.Id);
-            // Начальное заполнение данными при создании таблицы
             builder.HasData(DataSeed.Categories);
         });
 
@@ -33,7 +31,6 @@ public class DryCleanerDbContext(DbContextOptions<DryCleanerDbContext> options) 
         modelBuilder.Entity<Item>(builder =>
         {
             builder.HasKey(i => i.Id);
-            // Связь: Изделие имеет одну Категорию
             builder.HasOne(i => i.Category)
                    .WithMany()
                    .HasForeignKey(i => i.CategoryId);
@@ -43,11 +40,9 @@ public class DryCleanerDbContext(DbContextOptions<DryCleanerDbContext> options) 
         modelBuilder.Entity<Order>(builder =>
         {
             builder.HasKey(o => o.Id);
-            // Связь: Заказ имеет одного Клиента
             builder.HasOne(o => o.Client)
                    .WithMany()
                    .HasForeignKey(o => o.ClientId);
-            // Связь: Заказ имеет одно Изделие
             builder.HasOne(o => o.Item)
                    .WithMany()
                    .HasForeignKey(o => o.ItemId);

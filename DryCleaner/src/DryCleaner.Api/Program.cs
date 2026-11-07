@@ -1,20 +1,21 @@
-﻿using DryCleaner.Api;
+﻿using DryCleaner.Infrastructure.EFCore;
+using DryCleaner.Infrastructure.EFCore.Repositories;
+using Microsoft.EntityFrameworkCore;
+using DryCleaner.Api;
 using DryCleaner.Application.Services;
 using DryCleaner.Contracts.Dtos.Categories;
 using DryCleaner.Contracts.Dtos.Clients;
 using DryCleaner.Contracts.Dtos.Items;
 using DryCleaner.Contracts.Interfaces;
-using DryCleaner.Domain.Entities;
 using DryCleaner.Domain.Interfaces;
-using DryCleaner.Infrastructure.InMemory.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Scalar.AspNetCore;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.AddServiceDefaults();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -48,11 +49,14 @@ builder.Services.AddOpenApi(options =>
     });
 });
 
-// Регистрация репозиториев
-builder.Services.AddSingleton<IClientRepository, ClientInMemoryRepository>();
-builder.Services.AddSingleton<IItemRepository, ItemInMemoryRepository>();
-builder.Services.AddSingleton<IOrderRepository, OrderInMemoryRepository>();
-builder.Services.AddSingleton<ICategoryRepository, CategoryInMemoryRepository>();
+// Настройка подключения к MySQL
+builder.AddMySqlDbContext<DryCleanerDbContext>("drycleanerdb");
+
+// Регистрация репозиториев 
+builder.Services.AddScoped<IClientRepository, ClientEfCoreRepository>();
+builder.Services.AddScoped<IItemRepository, ItemEfCoreRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderEfCoreRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryEfCoreRepository>();
 
 builder.Services.AddSingleton<IAnalyticsService, AnalyticsService>();
 
@@ -80,12 +84,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-// Заполняем базу при запуске
-using (var scope = app.Services.CreateScope())
-{
-    await DataSeeder.SeedAsync(scope.ServiceProvider);
-}
-
 app.UseMiddleware<DryCleaner.Api.Middleware.ExceptionHandlingMiddleware>();
 
 app.MapOpenApi();
@@ -96,4 +94,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
+app.MapDefaultEndpoints();
 app.Run();

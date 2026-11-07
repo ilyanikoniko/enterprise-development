@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="DryCleaner.AppHost/DryCleaner.AppHost.csproj" Id="36c1dff6-95ef-472e-b3d4-d936bb876b43" />
   <Project Path="DryCleaner.Infrastructure.EFCore/DryCleaner.Infrastructure.EFCore.csproj" Id="111fec01-562c-4592-b180-30278cf87c7a" />
   <Project Path="src/DryCleaner.Api/DryCleaner.Api.csproj" />
   <Project Path="src/DryCleaner.Application/DryCleaner.Application.csproj" />
