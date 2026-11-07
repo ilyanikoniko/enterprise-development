@@ -1,6 +1,7 @@
 <Solution>
   <Project Path="DryCleaner.AppHost/DryCleaner.AppHost.csproj" Id="36c1dff6-95ef-472e-b3d4-d936bb876b43" />
   <Project Path="DryCleaner.Infrastructure.EFCore/DryCleaner.Infrastructure.EFCore.csproj" Id="111fec01-562c-4592-b180-30278cf87c7a" />
+  <Project Path="DryCleaner.ServiceDefaults/DryCleaner.ServiceDefaults.csproj" Id="ea75eb5d-b0cf-4bc4-944b-f188f50109a7" />
   <Project Path="src/DryCleaner.Api/DryCleaner.Api.csproj" />
   <Project Path="src/DryCleaner.Application/DryCleaner.Application.csproj" />
   <Project Path="src/DryCleaner.Contracts/DryCleaner.Contracts.csproj" />

@@ -9,4 +9,12 @@
     <UserSecretsId>1ab8ee6e-e71e-467d-80dd-3be4b71175fd</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.MySql" Version="13.6.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\DryCleaner.Api\DryCleaner.Api.csproj" />
+  </ItemGroup>
+
 </Project>

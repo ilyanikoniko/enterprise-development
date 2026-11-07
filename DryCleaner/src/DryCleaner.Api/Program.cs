@@ -53,10 +53,10 @@ builder.Services.AddOpenApi(options =>
 builder.AddMySqlDbContext<DryCleanerDbContext>("drycleanerdb");
 
 // Регистрация репозиториев 
-builder.Services.AddScoped<IClientRepository, ClientEfCoreRepository>();
-builder.Services.AddScoped<IItemRepository, ItemEfCoreRepository>();
-builder.Services.AddScoped<IOrderRepository, OrderEfCoreRepository>();
-builder.Services.AddScoped<ICategoryRepository, CategoryEfCoreRepository>();
+builder.Services.AddTransient<IClientRepository, ClientEfCoreRepository>();
+builder.Services.AddTransient<IItemRepository, ItemEfCoreRepository>();
+builder.Services.AddTransient<IOrderRepository, OrderEfCoreRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryEfCoreRepository>();
 
 builder.Services.AddSingleton<IAnalyticsService, AnalyticsService>();
 
