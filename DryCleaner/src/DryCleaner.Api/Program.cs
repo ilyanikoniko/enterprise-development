@@ -16,7 +16,11 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+    });
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddOpenApi(options =>
@@ -49,18 +53,18 @@ builder.Services.AddOpenApi(options =>
 });
 
 // Регистрация репозиториев
-builder.Services.AddScoped<IClientRepository, ClientInMemoryRepository>();
-builder.Services.AddScoped<IItemRepository, ItemInMemoryRepository>();
-builder.Services.AddScoped<IOrderRepository, OrderInMemoryRepository>();
-builder.Services.AddScoped<ICategoryRepository, CategoryInMemoryRepository>();
+builder.Services.AddSingleton<IClientRepository, ClientInMemoryRepository>();
+builder.Services.AddSingleton<IItemRepository, ItemInMemoryRepository>();
+builder.Services.AddSingleton<IOrderRepository, OrderInMemoryRepository>();
+builder.Services.AddSingleton<ICategoryRepository, CategoryInMemoryRepository>();
 
-builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
+builder.Services.AddSingleton<IAnalyticsService, AnalyticsService>();
 
 // Регистрация CRUD сервисов
-builder.Services.AddScoped<IApplicationService<ClientDto, ClientEditDto, int>, ClientService>();
-builder.Services.AddScoped<IApplicationService<CategoryDto, CategoryEditDto, int>, CategoryService>();
-builder.Services.AddScoped<IApplicationService<ItemDto, ItemCreateDto, int>, ItemService>();
-builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddSingleton<IApplicationService<ClientDto, ClientEditDto, int>, ClientService>();
+builder.Services.AddSingleton<IApplicationService<CategoryDto, CategoryEditDto, int>, CategoryService>();
+builder.Services.AddSingleton<IApplicationService<ItemDto, ItemCreateDto, int>, ItemService>();
+builder.Services.AddSingleton<IOrderService, OrderService>();
 
 // Настройка аутентификации JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

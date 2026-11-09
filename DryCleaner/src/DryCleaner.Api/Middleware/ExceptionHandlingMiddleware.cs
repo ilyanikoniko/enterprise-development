@@ -43,7 +43,13 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)statusCode;
         var response = new { error = message };
-        var json = JsonSerializer.Serialize(response);
+
+        var options = new JsonSerializerOptions
+        {
+            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        };
+
+        var json = JsonSerializer.Serialize(response, options);
         await context.Response.WriteAsync(json);
     }
 }
