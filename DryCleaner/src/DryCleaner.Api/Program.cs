@@ -58,13 +58,13 @@ builder.Services.AddTransient<IItemRepository, ItemEfCoreRepository>();
 builder.Services.AddTransient<IOrderRepository, OrderEfCoreRepository>();
 builder.Services.AddTransient<ICategoryRepository, CategoryEfCoreRepository>();
 
-builder.Services.AddSingleton<IAnalyticsService, AnalyticsService>();
+builder.Services.AddTransient<IAnalyticsService, AnalyticsService>();
 
 // Регистрация CRUD сервисов
-builder.Services.AddSingleton<IApplicationService<ClientDto, ClientEditDto, int>, ClientService>();
-builder.Services.AddSingleton<IApplicationService<CategoryDto, CategoryEditDto, int>, CategoryService>();
-builder.Services.AddSingleton<IApplicationService<ItemDto, ItemCreateDto, int>, ItemService>();
-builder.Services.AddSingleton<IOrderService, OrderService>();
+builder.Services.AddTransient<IApplicationService<ClientDto, ClientEditDto, int>, ClientService>();
+builder.Services.AddTransient<IApplicationService<CategoryDto, CategoryEditDto, int>, CategoryService>();
+builder.Services.AddTransient<IApplicationService<ItemDto, ItemCreateDto, int>, ItemService>();
+builder.Services.AddTransient<IOrderService, OrderService>();
 
 // Настройка аутентификации JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
