@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Scalar.AspNetCore;
 using System.Text;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
@@ -53,7 +54,6 @@ builder.Services.AddOpenApi(options =>
     });
 });
 
-// Настройка подключения к MySQL
 builder.AddMySqlDbContext<DryCleanerDbContext>("drycleanerdb");
 
 // Регистрация репозиториев 
@@ -90,8 +90,15 @@ var app = builder.Build();
 
 app.UseMiddleware<DryCleaner.Api.Middleware.ExceptionHandlingMiddleware>();
 
-app.MapOpenApi();
-app.MapScalarApiReference();
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+
+    using var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<DryCleanerDbContext>();
+    context.Database.Migrate();
+}
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

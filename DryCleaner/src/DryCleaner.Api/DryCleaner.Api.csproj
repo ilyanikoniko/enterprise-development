@@ -12,7 +12,7 @@
     <PackageReference Include="Aspire.Pomelo.EntityFrameworkCore.MySql" Version="13.6.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.14" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.14">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DryCleaner.Infrastructure.EFCore\DryCleaner.Infrastructure.EFCore.csproj" />
-    <ProjectReference Include="..\..\DryCleaner.ServiceDefaults\DryCleaner.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\DryCleaner.Infrastructure.EFCore\DryCleaner.Infrastructure.EFCore.csproj" />
+    <ProjectReference Include="..\DryCleaner.ServiceDefaults\DryCleaner.ServiceDefaults.csproj" />
     <ProjectReference Include="..\DryCleaner.Application\DryCleaner.Application.csproj" />
     <ProjectReference Include="..\DryCleaner.Contracts\DryCleaner.Contracts.csproj" />
     <ProjectReference Include="..\DryCleaner.Domain\DryCleaner.Domain.csproj" />

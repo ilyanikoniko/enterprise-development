@@ -9,6 +9,7 @@ namespace DryCleaner.Infrastructure.EFCore.Repositories;
 /// </summary>
 public class OrderEfCoreRepository(DryCleanerDbContext context) : IOrderRepository
 {
+    /// <inheritdoc/>
     public async Task<Order> Create(Order entity)
     {
         var result = await context.Orders.AddAsync(entity);
@@ -16,6 +17,7 @@ public class OrderEfCoreRepository(DryCleanerDbContext context) : IOrderReposito
         return result.Entity;
     }
 
+    /// <inheritdoc/>
     public async Task<bool> Delete(int entityId)
     {
         var entity = await context.Orders.FirstOrDefaultAsync(o => o.Id == entityId);
@@ -27,18 +29,21 @@ public class OrderEfCoreRepository(DryCleanerDbContext context) : IOrderReposito
         return true;
     }
 
+    /// <inheritdoc/>
     public async Task<Order?> Read(int entityId) =>
         await context.Orders
             .Include(o => o.Client) 
             .Include(o => o.Item)   
             .FirstOrDefaultAsync(o => o.Id == entityId);
 
+    /// <inheritdoc/>
     public async Task<IList<Order>> ReadAll() =>
         await context.Orders
             .Include(o => o.Client) 
             .Include(o => o.Item)   
             .ToListAsync();
 
+    /// <inheritdoc/>
     public async Task<Order> Update(Order entity)
     {
         context.Orders.Update(entity);

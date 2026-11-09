@@ -9,6 +9,8 @@ namespace DryCleaner.Infrastructure.EFCore.Repositories;
 /// </summary>
 public class CategoryEfCoreRepository(DryCleanerDbContext context) : ICategoryRepository
 {
+
+    /// <inheritdoc/>
     public async Task<Category> Create(Category entity)
     {
         var result = await context.Categories.AddAsync(entity);
@@ -16,6 +18,7 @@ public class CategoryEfCoreRepository(DryCleanerDbContext context) : ICategoryRe
         return result.Entity;
     }
 
+    /// <inheritdoc/>
     public async Task<bool> Delete(int entityId)
     {
         var entity = await context.Categories.FirstOrDefaultAsync(c => c.Id == entityId);
@@ -27,12 +30,15 @@ public class CategoryEfCoreRepository(DryCleanerDbContext context) : ICategoryRe
         return true;
     }
 
+    /// <inheritdoc/>
     public async Task<Category?> Read(int entityId) =>
         await context.Categories.FirstOrDefaultAsync(c => c.Id == entityId);
 
+    /// <inheritdoc/>
     public async Task<IList<Category>> ReadAll() =>
         await context.Categories.ToListAsync();
 
+    /// <inheritdoc/>
     public async Task<Category> Update(Category entity)
     {
         context.Categories.Update(entity);

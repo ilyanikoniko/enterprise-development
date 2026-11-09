@@ -9,6 +9,7 @@ namespace DryCleaner.Infrastructure.EFCore.Repositories;
 /// </summary>
 public class ClientEfCoreRepository(DryCleanerDbContext context) : IClientRepository
 {
+    /// <inheritdoc/>
     public async Task<Client> Create(Client entity)
     {
         var result = await context.Clients.AddAsync(entity);
@@ -16,6 +17,7 @@ public class ClientEfCoreRepository(DryCleanerDbContext context) : IClientReposi
         return result.Entity;
     }
 
+    /// <inheritdoc/>
     public async Task<bool> Delete(int entityId)
     {
         var entity = await context.Clients.FirstOrDefaultAsync(c => c.Id == entityId);
@@ -27,12 +29,15 @@ public class ClientEfCoreRepository(DryCleanerDbContext context) : IClientReposi
         return true;
     }
 
+    /// <inheritdoc/>
     public async Task<Client?> Read(int entityId) =>
         await context.Clients.FirstOrDefaultAsync(c => c.Id == entityId);
 
+    /// <inheritdoc/>
     public async Task<IList<Client>> ReadAll() =>
         await context.Clients.ToListAsync();
 
+    /// <inheritdoc/>
     public async Task<Client> Update(Client entity)
     {
         context.Clients.Update(entity);

@@ -14,6 +14,10 @@ public class DryCleanerDbContext(DbContextOptions<DryCleanerDbContext> options) 
     public DbSet<Item> Items { get; set; }
     public DbSet<Order> Orders { get; set; }
 
+    /// <summary>
+    /// Настройка модели базы данных 
+    /// </summary>
+    /// <param name="modelBuilder">Строитель модели</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Category>(builder =>

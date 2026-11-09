@@ -43,7 +43,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     /// <response code="400">Некорректные данные</response>
     /// <response code="404">Запись не найдена</response>
     /// <response code="500">Внутренняя ошибка сервера</response>
-    [HttpPut("{id}")]
+    [HttpGet("{id:int}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
@@ -66,7 +66,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     /// <response code="200">Запись успешно удалена</response>
     /// <response code="404">Запись не найдена</response>
     /// <response code="500">Внутренняя ошибка сервера</response>
-    [HttpDelete("{id}")]
+    [HttpGet("{id:int}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
@@ -108,7 +108,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     /// <response code="200">Запись успешно найдена</response>
     /// <response code="404">Запись не найдена</response>
     /// <response code="500">Внутренняя ошибка сервера</response>
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]

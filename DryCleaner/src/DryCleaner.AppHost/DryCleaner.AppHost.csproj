@@ -11,10 +11,11 @@
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.MySql" Version="13.6.4" />
+    <PackageReference Include="Hex1b" Version="0.168.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\DryCleaner.Api\DryCleaner.Api.csproj" />
+    <ProjectReference Include="..\DryCleaner.Api\DryCleaner.Api.csproj" />
   </ItemGroup>
 
 </Project>
