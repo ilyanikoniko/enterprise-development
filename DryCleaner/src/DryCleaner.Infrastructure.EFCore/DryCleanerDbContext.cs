@@ -5,14 +5,29 @@ using Microsoft.EntityFrameworkCore;
 namespace DryCleaner.Infrastructure.EFCore;
 
 /// <summary>
-/// Класс описывающий контекст базы данных
+/// Контекст базы данных химчистки
 /// </summary>
 /// <param name="options">Настройки контекста базы данных</param>
 public class DryCleanerDbContext(DbContextOptions<DryCleanerDbContext> options) : DbContext(options)
 {
+    /// <summary>
+    /// Таблица клиентов химчистки
+    /// </summary>
     public DbSet<Client> Clients { get; set; }
+
+    /// <summary>
+    /// Таблица категорий изделий 
+    /// </summary>
     public DbSet<Category> Categories { get; set; }
+
+    /// <summary>
+    /// Таблица изделий, принимаемых в химчистку
+    /// </summary>
     public DbSet<Item> Items { get; set; }
+
+    /// <summary>
+    /// Таблица заказов на химчистку
+    /// </summary>
     public DbSet<Order> Orders { get; set; }
 
     /// <summary>
