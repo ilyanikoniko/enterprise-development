@@ -5,8 +5,9 @@ using Microsoft.EntityFrameworkCore;
 namespace DryCleaner.Infrastructure.EFCore;
 
 /// <summary>
-/// Контекст базы данных для химчистки (EF Core)
+/// Класс описывающий контекст базы данных
 /// </summary>
+/// <param name="options">Настройки контекста базы данных</param>
 public class DryCleanerDbContext(DbContextOptions<DryCleanerDbContext> options) : DbContext(options)
 {
     public DbSet<Client> Clients { get; set; }
@@ -15,21 +16,20 @@ public class DryCleanerDbContext(DbContextOptions<DryCleanerDbContext> options) 
     public DbSet<Order> Orders { get; set; }
 
     /// <summary>
-    /// Настройка модели базы данных 
+    /// Настраивает конфигурацию сущностей и их связей в модели базы данных, добавляет данные
     /// </summary>
-    /// <param name="modelBuilder">Строитель модели</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Category>(builder =>
         {
             builder.HasKey(c => c.Id);
-            builder.HasData(DataSeed.Categories);
+            builder.HasData(DataSeed.Categories); 
         });
 
         modelBuilder.Entity<Client>(builder =>
         {
             builder.HasKey(c => c.Id);
-            builder.HasData(DataSeed.Clients);
+            builder.HasData(DataSeed.Clients); 
         });
 
         modelBuilder.Entity<Item>(builder =>
@@ -38,7 +38,14 @@ public class DryCleanerDbContext(DbContextOptions<DryCleanerDbContext> options) 
             builder.HasOne(i => i.Category)
                    .WithMany()
                    .HasForeignKey(i => i.CategoryId);
-            builder.HasData(DataSeed.Items);
+
+            builder.HasData(DataSeed.Items.Select(i => new
+            {
+                i.Id,
+                i.Name,
+                i.Material,
+                CategoryId = i.Category!.Id
+            }));
         });
 
         modelBuilder.Entity<Order>(builder =>
@@ -50,7 +57,16 @@ public class DryCleanerDbContext(DbContextOptions<DryCleanerDbContext> options) 
             builder.HasOne(o => o.Item)
                    .WithMany()
                    .HasForeignKey(o => o.ItemId);
-            builder.HasData(DataSeed.Orders);
+
+            builder.HasData(DataSeed.Orders.Select(o => new
+            {
+                o.Id,
+                ClientId = o.Client!.Id,
+                ItemId = o.Item!.Id,
+                o.AcceptanceDate,
+                o.CompletionDays,
+                o.Status
+            }));
         });
     }
 }

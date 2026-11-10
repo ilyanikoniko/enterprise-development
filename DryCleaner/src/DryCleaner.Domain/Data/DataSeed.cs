@@ -215,7 +215,8 @@ public static class DataSeed
             Id = 1,
             Name = "Пальто шерстяное",
             Material = "Шерсть",
-            CategoryId = 1
+            CategoryId = 1,
+            Category = Categories[0]
         },
 
         new Item
@@ -223,7 +224,8 @@ public static class DataSeed
             Id = 2,
             Name = "Пуховик зимний",
             Material = "Полиэстер",
-            CategoryId = 1
+            CategoryId = 1,
+            Category = Categories[0]
         },
 
         new Item
@@ -231,7 +233,8 @@ public static class DataSeed
             Id = 3,
             Name = "Костюм шерстяной",
             Material = "Шерсть",
-            CategoryId = 2
+            CategoryId = 2,
+            Category = Categories[1]
         },
 
         new Item
@@ -239,7 +242,8 @@ public static class DataSeed
             Id = 4,
             Name = "Костюм льняной",
             Material = "Лён",
-            CategoryId = 2
+            CategoryId = 2,
+            Category = Categories[1]
         },
 
         new Item
@@ -247,7 +251,8 @@ public static class DataSeed
             Id = 5,
             Name = "Платье шёлковое",
             Material = "Шёлк",
-            CategoryId = 3
+            CategoryId = 3,
+            Category = Categories[2]
         },
 
         new Item
@@ -255,7 +260,8 @@ public static class DataSeed
             Id = 6,
             Name = "Платье хлопковое",
             Material = "Хлопок",
-            CategoryId = 3
+            CategoryId = 3,
+            Category = Categories[2]
         },
 
         new Item
@@ -263,7 +269,8 @@ public static class DataSeed
             Id = 7,
             Name = "Сорочка хлопковая",
             Material = "Хлопок",
-            CategoryId = 4
+            CategoryId = 4,
+            Category = Categories[3]
         },
 
         new Item
@@ -271,7 +278,8 @@ public static class DataSeed
             Id = 8,
             Name = "Сорочка льняная",
             Material = "Лён",
-            CategoryId = 4
+            CategoryId = 4,
+            Category = Categories[3]
         },
 
         new Item
@@ -279,7 +287,8 @@ public static class DataSeed
             Id = 9,
             Name = "Брюки шерстяные",
             Material = "Шерсть",
-            CategoryId = 5
+            CategoryId = 5,
+            Category = Categories[4]
         },
 
         new Item
@@ -287,7 +296,8 @@ public static class DataSeed
             Id = 10,
             Name = "Джинсы классические",
             Material = "Деним",
-            CategoryId = 5
+            CategoryId = 5,
+            Category = Categories[4]
         },
 
         new Item
@@ -295,7 +305,8 @@ public static class DataSeed
             Id = 11,
             Name = "Пальто кашемировое",
             Material = "Кашемир",
-            CategoryId = 6
+            CategoryId = 6,
+            Category = Categories[5]
         },
 
         new Item
@@ -303,7 +314,8 @@ public static class DataSeed
             Id = 12,
             Name = "Шуба искусственная",
             Material = "Полиэстер",
-            CategoryId = 6
+            CategoryId = 6,
+            Category = Categories[5]
         },
 
         new Item
@@ -311,7 +323,8 @@ public static class DataSeed
             Id = 13,
             Name = "Куртка кожаная",
             Material = "Кожа",
-            CategoryId = 7
+            CategoryId = 7,
+            Category = Categories[6]
         },
 
         new Item
@@ -319,7 +332,8 @@ public static class DataSeed
             Id = 14,
             Name = "Ветровка спортивная",
             Material = "Полиэстер",
-            CategoryId = 7
+            CategoryId = 7,
+            Category = Categories[6]
         },
 
         new Item
@@ -327,7 +341,8 @@ public static class DataSeed
             Id = 15,
             Name = "Покрывало хлопковое",
             Material = "Хлопок",
-            CategoryId = 8
+            CategoryId = 8,
+            Category = Categories[7]
         },
 
         new Item
@@ -335,7 +350,8 @@ public static class DataSeed
             Id = 16,
             Name = "Скатерть льняная",
             Material = "Лён",
-            CategoryId = 8
+            CategoryId = 8,
+            Category = Categories[7]
         },
 
         new Item
@@ -343,7 +359,8 @@ public static class DataSeed
             Id = 17,
             Name = "Одеяло шерстяное",
             Material = "Шерсть",
-            CategoryId = 9
+            CategoryId = 9,
+            Category = Categories[8]
         },
 
         new Item
@@ -351,7 +368,8 @@ public static class DataSeed
             Id = 18,
             Name = "Плед флисовый",
             Material = "Полиэстер",
-            CategoryId = 9
+            CategoryId = 9,
+            Category = Categories[8]
         },
 
         new Item
@@ -359,7 +377,8 @@ public static class DataSeed
             Id = 19,
             Name = "Ботинки кожаные",
             Material = "Кожа",
-            CategoryId = 10
+            CategoryId = 10,
+            Category = Categories[9]
         },
 
         new Item
@@ -367,7 +386,8 @@ public static class DataSeed
             Id = 20,
             Name = "Сапоги замшевые",
             Material = "Замша",
-            CategoryId = 10
+            CategoryId = 10,
+            Category = Categories[9]
         }
     ];
 
@@ -381,7 +401,9 @@ public static class DataSeed
         {
             Id = 1,
             ClientId = 1,
+            Client = Clients[0],
             ItemId = 1,
+            Item = Items[0],
             AcceptanceDate = new DateTime(2024, 11, 12),
             CompletionDays = 7,
             Status = OrderStatus.Completed
@@ -391,7 +413,9 @@ public static class DataSeed
         {
             Id = 2,
             ClientId = 1,
+            Client = Clients[0],
             ItemId = 5,
+            Item = Items[4],
             AcceptanceDate = new DateTime(2025, 2, 18),
             CompletionDays = 4,
             Status = OrderStatus.Completed
@@ -401,7 +425,9 @@ public static class DataSeed
         {
             Id = 3,
             ClientId = 1,
+            Client = Clients[0],
             ItemId = 9,
+            Item = Items[8],
             AcceptanceDate = new DateTime(2025, 12, 3),
             CompletionDays = 12,
             Status = OrderStatus.InProgress
@@ -411,7 +437,9 @@ public static class DataSeed
         {
             Id = 4,
             ClientId = 1,
+            Client = Clients[0],
             ItemId = 15,
+            Item = Items[14],
             AcceptanceDate = new DateTime(2026, 4, 22),
             CompletionDays = 6,
             Status = OrderStatus.InProgress
@@ -421,7 +449,9 @@ public static class DataSeed
         {
             Id = 5,
             ClientId = 1,
+            Client = Clients[0],
             ItemId = 3,
+            Item = Items[2],
             AcceptanceDate = new DateTime(2025, 6, 5),
             CompletionDays = 5,
             Status = OrderStatus.Completed
@@ -431,7 +461,9 @@ public static class DataSeed
         {
             Id = 6,
             ClientId = 1,
+            Client = Clients[0],
             ItemId = 7,
+            Item = Items[6],
             AcceptanceDate = new DateTime(2025, 9, 14),
             CompletionDays = 8,
             Status = OrderStatus.Completed
@@ -441,7 +473,9 @@ public static class DataSeed
         {
             Id = 7,
             ClientId = 1,
+            Client = Clients[0],
             ItemId = 11,
+            Item = Items[10],
             AcceptanceDate = new DateTime(2026, 1, 20),
             CompletionDays = 10,
             Status = OrderStatus.Ready
@@ -451,7 +485,9 @@ public static class DataSeed
         {
             Id = 8,
             ClientId = 1,
+            Client = Clients[0],
             ItemId = 17,
+            Item = Items[16],
             AcceptanceDate = new DateTime(2026, 5, 30),
             CompletionDays = 9,
             Status = OrderStatus.InProgress
@@ -462,7 +498,9 @@ public static class DataSeed
         {
             Id = 9,
             ClientId = 2,
+            Client = Clients[1],
             ItemId = 2,
+            Item = Items[1],
             AcceptanceDate = new DateTime(2024, 12, 5),
             CompletionDays = 5,
             Status = OrderStatus.Completed
@@ -472,7 +510,9 @@ public static class DataSeed
         {
             Id = 10,
             ClientId = 2,
+            Client = Clients[1],
             ItemId = 7,
+            Item = Items[6],
             AcceptanceDate = new DateTime(2025, 5, 14),
             CompletionDays = 3,
             Status = OrderStatus.Completed
@@ -482,7 +522,9 @@ public static class DataSeed
         {
             Id = 11,
             ClientId = 2,
+            Client = Clients[1],
             ItemId = 11,
+            Item = Items[10],
             AcceptanceDate = new DateTime(2026, 1, 9),
             CompletionDays = 8,
             Status = OrderStatus.Ready
@@ -492,7 +534,9 @@ public static class DataSeed
         {
             Id = 12,
             ClientId = 2,
+            Client = Clients[1],
             ItemId = 4,
+            Item = Items[3],
             AcceptanceDate = new DateTime(2025, 7, 22),
             CompletionDays = 6,
             Status = OrderStatus.Completed
@@ -502,7 +546,9 @@ public static class DataSeed
         {
             Id = 13,
             ClientId = 2,
+            Client = Clients[1],
             ItemId = 13,
+            Item = Items[12],
             AcceptanceDate = new DateTime(2025, 10, 8),
             CompletionDays = 11,
             Status = OrderStatus.Completed
@@ -512,7 +558,9 @@ public static class DataSeed
         {
             Id = 14,
             ClientId = 2,
+            Client = Clients[1],
             ItemId = 18,
+            Item = Items[17],
             AcceptanceDate = new DateTime(2026, 3, 14),
             CompletionDays = 7,
             Status = OrderStatus.Ready
@@ -522,7 +570,9 @@ public static class DataSeed
         {
             Id = 15,
             ClientId = 2,
+            Client = Clients[1],
             ItemId = 6,
+            Item = Items[5],
             AcceptanceDate = new DateTime(2026, 5, 5),
             CompletionDays = 9,
             Status = OrderStatus.InProgress
@@ -533,7 +583,9 @@ public static class DataSeed
         {
             Id = 16,
             ClientId = 3,
+            Client = Clients[2],
             ItemId = 6,
+            Item = Items[5],
             AcceptanceDate = new DateTime(2024, 10, 30),
             CompletionDays = 9,
             Status = OrderStatus.Completed
@@ -543,7 +595,9 @@ public static class DataSeed
         {
             Id = 17,
             ClientId = 3,
+            Client = Clients[2],
             ItemId = 13,
+            Item = Items[12],
             AcceptanceDate = new DateTime(2025, 9, 25),
             CompletionDays = 14,
             Status = OrderStatus.Completed
@@ -553,7 +607,9 @@ public static class DataSeed
         {
             Id = 18,
             ClientId = 3,
+            Client = Clients[2],
             ItemId = 17,
+            Item = Items[16],
             AcceptanceDate = new DateTime(2025, 12, 28),
             CompletionDays = 16,
             Status = OrderStatus.InProgress
@@ -563,7 +619,9 @@ public static class DataSeed
         {
             Id = 19,
             ClientId = 3,
+            Client = Clients[2],
             ItemId = 9,
+            Item = Items[8],
             AcceptanceDate = new DateTime(2025, 4, 17),
             CompletionDays = 5,
             Status = OrderStatus.Completed
@@ -573,7 +631,9 @@ public static class DataSeed
         {
             Id = 20,
             ClientId = 3,
+            Client = Clients[2],
             ItemId = 19,
+            Item = Items[18],
             AcceptanceDate = new DateTime(2026, 2, 12),
             CompletionDays = 8,
             Status = OrderStatus.Ready
@@ -583,7 +643,9 @@ public static class DataSeed
         {
             Id = 21,
             ClientId = 3,
+            Client = Clients[2],
             ItemId = 15,
+            Item = Items[14],
             AcceptanceDate = new DateTime(2026, 6, 18),
             CompletionDays = 10,
             Status = OrderStatus.InProgress
@@ -594,7 +656,9 @@ public static class DataSeed
         {
             Id = 22,
             ClientId = 4,
+            Client = Clients[3],
             ItemId = 3,
+            Item = Items[2],
             AcceptanceDate = new DateTime(2025, 1, 14),
             CompletionDays = 6,
             Status = OrderStatus.Completed
@@ -604,7 +668,9 @@ public static class DataSeed
         {
             Id = 23,
             ClientId = 4,
+            Client = Clients[3],
             ItemId = 10,
+            Item = Items[9],
             AcceptanceDate = new DateTime(2025, 10, 8),
             CompletionDays = 18,
             Status = OrderStatus.Completed
@@ -614,7 +680,9 @@ public static class DataSeed
         {
             Id = 24,
             ClientId = 4,
+            Client = Clients[3],
             ItemId = 19,
+            Item = Items[18],
             AcceptanceDate = new DateTime(2026, 2, 17),
             CompletionDays = 15,
             Status = OrderStatus.Ready
@@ -624,7 +692,9 @@ public static class DataSeed
         {
             Id = 25,
             ClientId = 4,
+            Client = Clients[3],
             ItemId = 14,
+            Item = Items[13],
             AcceptanceDate = new DateTime(2025, 8, 3),
             CompletionDays = 7,
             Status = OrderStatus.Completed
@@ -634,7 +704,9 @@ public static class DataSeed
         {
             Id = 26,
             ClientId = 4,
+            Client = Clients[3],
             ItemId = 1,
+            Item = Items[0],
             AcceptanceDate = new DateTime(2026, 4, 1),
             CompletionDays = 12,
             Status = OrderStatus.InProgress
@@ -645,7 +717,9 @@ public static class DataSeed
         {
             Id = 27,
             ClientId = 5,
+            Client = Clients[4],
             ItemId = 8,
+            Item = Items[7],
             AcceptanceDate = new DateTime(2025, 2, 27),
             CompletionDays = 5,
             Status = OrderStatus.Completed
@@ -655,7 +729,9 @@ public static class DataSeed
         {
             Id = 28,
             ClientId = 5,
+            Client = Clients[4],
             ItemId = 14,
+            Item = Items[13],
             AcceptanceDate = new DateTime(2025, 11, 12),
             CompletionDays = 7,
             Status = OrderStatus.Completed
@@ -665,7 +741,9 @@ public static class DataSeed
         {
             Id = 29,
             ClientId = 5,
+            Client = Clients[4],
             ItemId = 18,
+            Item = Items[17],
             AcceptanceDate = new DateTime(2026, 3, 6),
             CompletionDays = 11,
             Status = OrderStatus.Ready
@@ -675,7 +753,9 @@ public static class DataSeed
         {
             Id = 30,
             ClientId = 5,
+            Client = Clients[4],
             ItemId = 20,
+            Item = Items[19],
             AcceptanceDate = new DateTime(2026, 5, 20),
             CompletionDays = 6,
             Status = OrderStatus.InProgress
@@ -686,7 +766,9 @@ public static class DataSeed
         {
             Id = 31,
             ClientId = 6,
+            Client = Clients[5],
             ItemId = 4,
+            Item = Items[3],
             AcceptanceDate = new DateTime(2025, 4, 9),
             CompletionDays = 8,
             Status = OrderStatus.Completed
@@ -696,7 +778,9 @@ public static class DataSeed
         {
             Id = 32,
             ClientId = 6,
+            Client = Clients[5],
             ItemId = 12,
+            Item = Items[11],
             AcceptanceDate = new DateTime(2025, 6, 24),
             CompletionDays = 10,
             Status = OrderStatus.Completed
@@ -706,7 +790,9 @@ public static class DataSeed
         {
             Id = 33,
             ClientId = 6,
+            Client = Clients[5],
             ItemId = 20,
+            Item = Items[19],
             AcceptanceDate = new DateTime(2026, 1, 18),
             CompletionDays = 12,
             Status = OrderStatus.Ready
@@ -717,7 +803,9 @@ public static class DataSeed
         {
             Id = 34,
             ClientId = 7,
+            Client = Clients[6],
             ItemId = 5,
+            Item = Items[4],
             AcceptanceDate = new DateTime(2025, 4, 26),
             CompletionDays = 4,
             Status = OrderStatus.Completed
@@ -727,7 +815,9 @@ public static class DataSeed
         {
             Id = 35,
             ClientId = 7,
+            Client = Clients[6],
             ItemId = 16,
+            Item = Items[15],
             AcceptanceDate = new DateTime(2025, 8, 30),
             CompletionDays = 6,
             Status = OrderStatus.Completed
@@ -737,7 +827,9 @@ public static class DataSeed
         {
             Id = 36,
             ClientId = 7,
+            Client = Clients[6],
             ItemId = 6,
+            Item = Items[5],
             AcceptanceDate = new DateTime(2026, 1, 27),
             CompletionDays = 10,
             Status = OrderStatus.InProgress
@@ -748,7 +840,9 @@ public static class DataSeed
         {
             Id = 37,
             ClientId = 8,
+            Client = Clients[7],
             ItemId = 1,
+            Item = Items[0],
             AcceptanceDate = new DateTime(2025, 5, 29),
             CompletionDays = 9,
             Status = OrderStatus.Completed
@@ -758,7 +852,9 @@ public static class DataSeed
         {
             Id = 38,
             ClientId = 8,
+            Client = Clients[7],
             ItemId = 15,
+            Item = Items[14],
             AcceptanceDate = new DateTime(2025, 9, 20),
             CompletionDays = 13,
             Status = OrderStatus.Completed
@@ -768,7 +864,9 @@ public static class DataSeed
         {
             Id = 39,
             ClientId = 8,
+            Client = Clients[7],
             ItemId = 7,
+            Item = Items[6],
             AcceptanceDate = new DateTime(2026, 2, 22),
             CompletionDays = 17,
             Status = OrderStatus.Ready
@@ -779,7 +877,9 @@ public static class DataSeed
         {
             Id = 40,
             ClientId = 9,
+            Client = Clients[8],
             ItemId = 2,
+            Item = Items[1],
             AcceptanceDate = new DateTime(2025, 6, 18),
             CompletionDays = 6,
             Status = OrderStatus.Completed
@@ -789,7 +889,9 @@ public static class DataSeed
         {
             Id = 41,
             ClientId = 9,
+            Client = Clients[8],
             ItemId = 8,
+            Item = Items[7],
             AcceptanceDate = new DateTime(2025, 12, 20),
             CompletionDays = 11,
             Status = OrderStatus.InProgress
@@ -800,7 +902,9 @@ public static class DataSeed
         {
             Id = 42,
             ClientId = 10,
+            Client = Clients[9],
             ItemId = 3,
+            Item = Items[2],
             AcceptanceDate = new DateTime(2025, 7, 11),
             CompletionDays = 7,
             Status = OrderStatus.Completed
@@ -810,7 +914,9 @@ public static class DataSeed
         {
             Id = 43,
             ClientId = 10,
+            Client = Clients[9],
             ItemId = 9,
+            Item = Items[8],
             AcceptanceDate = new DateTime(2026, 1, 30),
             CompletionDays = 9,
             Status = OrderStatus.Ready
@@ -821,7 +927,9 @@ public static class DataSeed
         {
             Id = 44,
             ClientId = 11,
+            Client = Clients[10],
             ItemId = 4,
+            Item = Items[3],
             AcceptanceDate = new DateTime(2025, 8, 14),
             CompletionDays = 10,
             Status = OrderStatus.Completed
@@ -831,7 +939,9 @@ public static class DataSeed
         {
             Id = 45,
             ClientId = 11,
+            Client = Clients[10],
             ItemId = 10,
+            Item = Items[9],
             AcceptanceDate = new DateTime(2026, 2, 28),
             CompletionDays = 15,
             Status = OrderStatus.InProgress
@@ -842,7 +952,9 @@ public static class DataSeed
         {
             Id = 46,
             ClientId = 12,
+            Client = Clients[11],
             ItemId = 11,
+            Item = Items[10],
             AcceptanceDate = new DateTime(2025, 10, 22),
             CompletionDays = 14,
             Status = OrderStatus.Completed
@@ -852,7 +964,9 @@ public static class DataSeed
         {
             Id = 47,
             ClientId = 12,
+            Client = Clients[11],
             ItemId = 16,
+            Item = Items[15],
             AcceptanceDate = new DateTime(2026, 3, 18),
             CompletionDays = 18,
             Status = OrderStatus.InProgress
@@ -863,7 +977,9 @@ public static class DataSeed
         {
             Id = 48,
             ClientId = 13,
+            Client = Clients[12],
             ItemId = 12,
+            Item = Items[11],
             AcceptanceDate = new DateTime(2026, 4, 5),
             CompletionDays = 16,
             Status = OrderStatus.InProgress
@@ -874,7 +990,9 @@ public static class DataSeed
         {
             Id = 49,
             ClientId = 14,
+            Client = Clients[13],
             ItemId = 14,
+            Item = Items[13],
             AcceptanceDate = new DateTime(2026, 5, 27),
             CompletionDays = 5,
             Status = OrderStatus.Ready
@@ -885,7 +1003,9 @@ public static class DataSeed
         {
             Id = 50,
             ClientId = 15,
+            Client = Clients[14],
             ItemId = 20,
+            Item = Items[19],
             AcceptanceDate = new DateTime(2026, 6, 30),
             CompletionDays = 10,
             Status = OrderStatus.InProgress

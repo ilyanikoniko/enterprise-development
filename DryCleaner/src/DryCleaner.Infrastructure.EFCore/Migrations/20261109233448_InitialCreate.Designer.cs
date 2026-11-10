@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DryCleaner.Infrastructure.EFCore.Migrations
 {
     [DbContext(typeof(DryCleanerDbContext))]
-    [Migration("20261109204041_InitialCreate")]
+    [Migration("20261109233448_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

@@ -1,19 +1,20 @@
-﻿using DryCleaner.Infrastructure.EFCore;
-using DryCleaner.Infrastructure.EFCore.Repositories;
-using Microsoft.EntityFrameworkCore;
-using DryCleaner.Api;
+﻿using DryCleaner.Api;
 using DryCleaner.Application.Services;
 using DryCleaner.Contracts.Dtos.Categories;
 using DryCleaner.Contracts.Dtos.Clients;
 using DryCleaner.Contracts.Dtos.Items;
 using DryCleaner.Contracts.Interfaces;
+using DryCleaner.Domain.Data;
 using DryCleaner.Domain.Interfaces;
+using DryCleaner.Infrastructure.EFCore;
+using DryCleaner.Infrastructure.EFCore.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Scalar.AspNetCore;
 using System.Text;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
@@ -54,7 +55,11 @@ builder.Services.AddOpenApi(options =>
     });
 });
 
-builder.AddMySqlDbContext<DryCleanerDbContext>("drycleanerdb");
+var connectionString = builder.Configuration.GetConnectionString("drycleanerdb");
+builder.Services.AddDbContext<DryCleanerDbContext>(options =>
+{
+    options.UseMySql(connectionString, new MySqlServerVersion(new Version(9, 7, 0)));
+});
 
 // Регистрация репозиториев 
 builder.Services.AddTransient<IClientRepository, ClientEfCoreRepository>();
@@ -97,6 +102,7 @@ if (app.Environment.IsDevelopment())
 
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<DryCleanerDbContext>();
+
     context.Database.Migrate();
 }
 
