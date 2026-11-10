@@ -136,7 +136,7 @@
 Если у вас появились идеи/пожелания/прочие полезные мысли по преподаваемой дисциплине, их можно оставить [здесь](https://github.com/itsecd/enterprise-development/discussions/categories/ideas).
 
 
-# Лабораторная работа №2 — REST API «Химчистка»
+# Лабораторная работа №3 — ORM «Химчистка»
 
 Учебный проект по дисциплине «Разработка корпоративных приложений» на платформе .NET 10.
 
@@ -148,14 +148,18 @@
 - **Клиент** — ФИО, телефон.
 - **Заказ** — клиент, изделие, дата приёма, срок выполнения, статус.
 
-Данные хранятся **в памяти** в виде коллекций.
+Данные хранятся в **базе данных MySQL**. Для работы с БД используется **Entity Framework Core**.
 
 ## Технологии
 
 - .NET 10
 - ASP.NET Core Web API
-- JWT 
-- OpenAPI 
+- **Entity Framework Core** (ORM)
+- **MySQL** (база данных)
+- **.NET Aspire** (оркестрация)
+- **Docker** (контейнеризация БД)
+- JWT
+- OpenAPI
 - Scalar UI
 - xUnit v3
 - LINQ
@@ -167,9 +171,11 @@
 
 - **Domain** — доменные сущности (`Client`, `Order`, `Item`, `Category`), интерфейсы репозиториев, тестовые данные (`DataSeed`).
 - **Contracts** — DTO для чтения и записи, интерфейсы сервисов (`IApplicationService`, `IAnalyticsService`).
-- **Application** — бизнес-логика (сервисы `ClientService`, `OrderService` и т.д., `AnalyticsService`, `Mapper` для преобразования сущностей).
-- **Infrastructure.InMemory** — реализация репозиториев в памяти (`ClientInMemoryRepository` и т.д.).
+- **Application** — бизнес-логика (сервисы `ClientService`, `OrderService` и т.д., `AnalyticsService`, `Mapper`).
+- **Infrastructure.EFCore** — реализация репозиториев через EF Core (`ClientEfCoreRepository` и т.д.), `DryCleanerDbContext`, миграции.
 - **Api** — контроллеры (`CrudControllerBase`, `AnalyticsController`, `AuthController`), глобальный `ExceptionHandlingMiddleware`, настройка DI в `Program.cs`.
+- **AppHost** — проект Aspire для оркестрации базы данных и API.
+- **ServiceDefaults** — общие настройки для API (OpenTelemetry, HealthChecks).
 - **Tests** — xUnit-тесты аналитических запросов.
 
 ## Структура
@@ -180,14 +186,19 @@ enterprise-development/
 │   └── workflows/
 │       └── tests.yml
 ├── docs/
-│   └── tests_results.png
+│   ├── tests_results.png
+│   ├── auth_login.jpg
+│   ├── auth_token.jpg
+│   └── scalar_example.jpg
 ├── DryCleaner/
 │   ├── src/
 │   │   ├── DryCleaner.Domain/
 │   │   ├── DryCleaner.Contracts/
 │   │   ├── DryCleaner.Application/
-│   │   ├── DryCleaner.Infrastructure.InMemory/
-│   │   └── DryCleaner.Api/
+│   │   ├── DryCleaner.Infrastructure.EFCore/
+│   │   ├── DryCleaner.Api/
+│   │   ├── DryCleaner.AppHost/
+│   │   └── DryCleaner.ServiceDefaults/
 │   ├── tests/
 │   │   └── DryCleaner.Tests/
 │   └── DryCleaner.slnx
@@ -205,41 +216,31 @@ enterprise-development/
   - Клиент, потративший наибольшую сумму.
 - **Авторизация** — JWT-токены. Все контроллеры (кроме `Auth`) защищены атрибутом `[Authorize]`.
 - **Документация** — OpenAPI + Scalar UI.
-
+- **База данных** — MySQL, развернутая в Docker-контейнере через Aspire.
+- **Миграции** — создание таблиц и заполнение начальными данными (`HasData`).
 
 ## Запуск
 
-1. Перейти в папку `src/DryCleaner.Api`.
-2. Запустить проект:
+> **Требования:** Установленный **Docker Desktop** (должен быть запущен) и **.NET 10 SDK**.
+
+1. Перейти в папку `DryCleaner/src/DryCleaner.AppHost`.
+2. Запустить проект Aspire:
    ```bash
    dotnet run
    ```
-3. Открыть в браузере: `https://localhost:51203/scalar`.
-4. Авторизоваться (метод `POST /api/Auth/login`):
+*(Или нажать F5 в Visual Studio, выбрав проект `DryCleaner.AppHost` как запускаемый).*
+
+3. Aspire автоматически:
+   - Поднимет контейнер с MySQL.
+   - Создаст базу данных `drycleanerdb`.
+   - Запустит API и применит миграции (таблицы создадутся автоматически, данные из `DataSeed` засеются).
+4. Открыть **Aspire Dashboard** (ссылка появится в консоли,`https://localhost:17005`).
+5. Открыть в браузере страницу **Scalar** (ссылка будет в Dashboard на строке `drycleanerapi`, `https://localhost:51203/scalar`).
+6. Авторизоваться (метод `POST /api/Auth/login`):
    - **Username:** `admin`
    - **Password:** `password`
-5. Скопировать полученный токен и вставить его в поле **Bearer Token** в Scalar.
+7. Скопировать полученный токен и вставить его в поле **Bearer Token** в Scalar.
 
-![auth_login](./docs/auth_login.jpg)
+![auth_login](./docs/aspire_dashboard.jpg)
 
-![auth_token](./docs/auth_token.jpg)
-
-## Пример работы API
-
-Ниже приведен пример работы метода аналитики `GET /api/Analytics/orders-in-progress` в интерфейсе Scalar. 
-Метод возвращает список заказов, находящихся в обработке, отсортированных по дате приема.
-
-![scalar_example](./docs/scalar_example.jpg)
-
-## Тесты
-
-Запуск тестов:
-
-```bash
-dotnet test
-```
-Тесты проверяют корректность аналитических запросов (5 тестов).
-
-## Результаты тестов
-
-![tests_results](./docs/tests_results.png)
+![auth_token](./docs/aspire_urls.jpg)
