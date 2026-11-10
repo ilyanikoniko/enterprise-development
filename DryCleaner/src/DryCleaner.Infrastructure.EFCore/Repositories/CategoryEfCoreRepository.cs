@@ -32,7 +32,7 @@ public class CategoryEfCoreRepository(DryCleanerDbContext context) : ICategoryRe
 
     /// <inheritdoc/>
     public async Task<Category?> Read(int entityId) =>
-        await context.Categories.FirstOrDefaultAsync(c => c.Id == entityId);
+        await context.Categories.AsNoTracking().FirstOrDefaultAsync(c => c.Id == entityId);
 
     /// <inheritdoc/>
     public async Task<IList<Category>> ReadAll() =>

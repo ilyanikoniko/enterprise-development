@@ -35,24 +35,40 @@ public class DryCleanerDbContext(DbContextOptions<DryCleanerDbContext> options) 
     /// </summary>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder); 
+
         modelBuilder.Entity<Category>(builder =>
         {
             builder.HasKey(c => c.Id);
-            builder.HasData(DataSeed.Categories); 
+
+            builder.Property(c => c.Name).HasMaxLength(200).IsRequired();
+            builder.Property(c => c.RecommendedCleaningType).HasMaxLength(100).IsRequired();
+            builder.Property(c => c.CleaningPrice).HasPrecision(10, 2);
+
+            builder.HasData(DataSeed.Categories);
         });
 
         modelBuilder.Entity<Client>(builder =>
         {
             builder.HasKey(c => c.Id);
-            builder.HasData(DataSeed.Clients); 
+
+            builder.Property(c => c.FullName).HasMaxLength(200).IsRequired();
+            builder.Property(c => c.PhoneNumber).HasMaxLength(20).IsRequired();
+
+            builder.HasData(DataSeed.Clients);
         });
 
         modelBuilder.Entity<Item>(builder =>
         {
             builder.HasKey(i => i.Id);
+
+            builder.Property(i => i.Name).HasMaxLength(200).IsRequired();
+            builder.Property(i => i.Material).HasMaxLength(100).IsRequired();
+
             builder.HasOne(i => i.Category)
                    .WithMany()
-                   .HasForeignKey(i => i.CategoryId);
+                   .HasForeignKey(i => i.CategoryId)
+                   .OnDelete(DeleteBehavior.Restrict); 
 
             builder.HasData(DataSeed.Items.Select(i => new
             {
@@ -66,12 +82,16 @@ public class DryCleanerDbContext(DbContextOptions<DryCleanerDbContext> options) 
         modelBuilder.Entity<Order>(builder =>
         {
             builder.HasKey(o => o.Id);
+
             builder.HasOne(o => o.Client)
                    .WithMany()
-                   .HasForeignKey(o => o.ClientId);
+                   .HasForeignKey(o => o.ClientId)
+                   .OnDelete(DeleteBehavior.Restrict); 
+
             builder.HasOne(o => o.Item)
                    .WithMany()
-                   .HasForeignKey(o => o.ItemId);
+                   .HasForeignKey(o => o.ItemId)
+                   .OnDelete(DeleteBehavior.Restrict); 
 
             builder.HasData(DataSeed.Orders.Select(o => new
             {

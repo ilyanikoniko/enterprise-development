@@ -1,6 +1,7 @@
-﻿using System.Net;
+﻿using DryCleaner.Application.Exceptions;
+using Microsoft.EntityFrameworkCore;
+using System.Net;
 using System.Text.Json;
-using DryCleaner.Application.Exceptions;
 
 namespace DryCleaner.Api.Middleware;
 
@@ -29,6 +30,24 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
         {
             logger.LogWarning("Не найдено: {message}", ex.Message);
             await HandleExceptionAsync(context, HttpStatusCode.NotFound, "Запрашиваемый ресурс не найден.");
+        }
+        catch (DbUpdateException ex)
+        {
+            var innerMessage = ex.InnerException?.Message ?? string.Empty;
+
+            if (innerMessage.Contains("foreign key constraint", StringComparison.OrdinalIgnoreCase) ||
+                innerMessage.Contains("Cannot delete or update a parent row", StringComparison.OrdinalIgnoreCase))
+            {
+                logger.LogWarning("Попытка удаления сущности, на которую ссылаются другие данные: {message}", innerMessage);
+                await HandleExceptionAsync(context, HttpStatusCode.Conflict,
+                    "Невозможно удалить запись, так как с ней связаны другие данные (например, заказы).");
+            }
+            else
+            {
+                logger.LogWarning("Ошибка при обновлении базы данных: {message}", innerMessage);
+                await HandleExceptionAsync(context, HttpStatusCode.Conflict,
+                    "Конфликт данных в базе данных.");
+            }
         }
         catch (Exception ex) 
         {
