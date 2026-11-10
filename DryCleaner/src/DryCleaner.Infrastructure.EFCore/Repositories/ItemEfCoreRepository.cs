@@ -37,8 +37,8 @@ public class ItemEfCoreRepository(DryCleanerDbContext context) : IItemRepository
     /// <inheritdoc/>
     public async Task<IList<Item>> ReadAll() =>
         await context.Items
-            .Include(i => i.Category) 
-            .ToListAsync();
+            .Include(i => i.Category)
+            .AsNoTracking().ToListAsync();
 
     /// <inheritdoc/>
     public async Task<Item> Update(Item entity)

@@ -35,7 +35,7 @@ public class ClientEfCoreRepository(DryCleanerDbContext context) : IClientReposi
 
     /// <inheritdoc/>
     public async Task<IList<Client>> ReadAll() =>
-        await context.Clients.ToListAsync();
+        await context.Clients.AsNoTracking().ToListAsync();
 
     /// <inheritdoc/>
     public async Task<Client> Update(Client entity)

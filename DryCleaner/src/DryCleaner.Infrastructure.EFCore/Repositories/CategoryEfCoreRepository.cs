@@ -36,7 +36,7 @@ public class CategoryEfCoreRepository(DryCleanerDbContext context) : ICategoryRe
 
     /// <inheritdoc/>
     public async Task<IList<Category>> ReadAll() =>
-        await context.Categories.ToListAsync();
+        await context.Categories.AsNoTracking().ToListAsync();
 
     /// <inheritdoc/>
     public async Task<Category> Update(Category entity)

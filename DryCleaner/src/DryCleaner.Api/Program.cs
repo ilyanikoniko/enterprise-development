@@ -55,11 +55,7 @@ builder.Services.AddOpenApi(options =>
     });
 });
 
-var connectionString = builder.Configuration.GetConnectionString("drycleanerdb");
-builder.Services.AddDbContext<DryCleanerDbContext>(options =>
-{
-    options.UseMySql(connectionString, new MySqlServerVersion(new Version(9, 7, 0)));
-});
+builder.AddMySqlDbContext<DryCleanerDbContext>("drycleanerdb");
 
 // Регистрация репозиториев 
 builder.Services.AddTransient<IClientRepository, ClientEfCoreRepository>();
