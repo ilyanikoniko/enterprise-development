@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity; 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,10 +12,16 @@ namespace DryCleaner.Api.Controllers;
 /// Контроллер для аутентификации пользователей и выдачи JWT-токенов
 /// </summary>
 /// <param name="configuration">Конфигурация приложения</param>
+/// <param name="passwordHasher">Хешер паролей</param> 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthController(IConfiguration configuration) : ControllerBase
+public class AuthController(
+    IConfiguration configuration,
+    IPasswordHasher<string> passwordHasher) 
+    : ControllerBase
 {
+    private static string? _hashedPassword;
+
     /// <summary>
     /// Модель запроса на авторизацию
     /// </summary>
@@ -33,12 +40,24 @@ public class AuthController(IConfiguration configuration) : ControllerBase
     [AllowAnonymous]
     public IActionResult Login([FromBody] LoginRequest request)
     {
-        if (request.Username == "admin" && request.Password == "password")
+    
+        if (_hashedPassword == null)
+        {
+            _hashedPassword = passwordHasher.HashPassword("admin", "password");
+        }
+
+        var result = passwordHasher.VerifyHashedPassword(
+            request.Username,
+            _hashedPassword,
+            request.Password);
+
+        if (request.Username == "admin" && result == PasswordVerificationResult.Success)
         {
             var token = GenerateJwtToken(request.Username);
             return Ok(new { token });
         }
         return Unauthorized("Неверный логин или пароль");
+
     }
 
     /// <summary>

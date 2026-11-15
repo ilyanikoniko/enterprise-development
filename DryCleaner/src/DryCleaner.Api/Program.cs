@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using Microsoft.AspNetCore.Identity;
 using Scalar.AspNetCore;
 using System.Text;
 using Microting.EntityFrameworkCore.MySql.Infrastructure;
@@ -77,6 +78,7 @@ builder.Services.AddTransient<IApplicationService<CategoryDto, CategoryEditDto, 
 builder.Services.AddTransient<IApplicationService<ItemDto, ItemCreateDto, int>, ItemService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 
+builder.Services.AddScoped<IPasswordHasher<string>, PasswordHasher<string>>();
 // Настройка аутентификации JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
