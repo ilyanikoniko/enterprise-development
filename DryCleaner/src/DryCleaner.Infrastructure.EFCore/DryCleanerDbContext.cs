@@ -32,6 +32,11 @@ public class DryCleanerDbContext(DbContextOptions<DryCleanerDbContext> options) 
     public DbSet<Order> Orders { get; set; }
 
     /// <summary>
+    /// Пользователи системы
+    /// </summary>
+    public DbSet<User> Users { get; set; }
+
+    /// <summary>
     /// Настраивает конфигурацию сущностей и их связей в модели базы данных, добавляет данные
     /// </summary>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -160,6 +165,29 @@ public class DryCleanerDbContext(DbContextOptions<DryCleanerDbContext> options) 
                 o.CompletionDays,
                 o.Status
             }));
+        });
+
+        modelBuilder.Entity<User>(builder =>
+        {
+            builder.ToTable("users");
+
+            builder.HasKey(u => u.Id);
+
+            builder.Property(u => u.Id)
+                   .HasColumnName("id");
+
+            builder.Property(u => u.Username)
+                   .HasColumnName("username")
+                   .HasMaxLength(100)
+                   .IsRequired();
+
+            builder.Property(u => u.PasswordHash)
+                   .HasColumnName("password_hash")
+                   .IsRequired();
+
+            builder.HasIndex(u => u.Username)
+                   .IsUnique()
+                   .HasDatabaseName("ix_users_username");
         });
     }
 }
