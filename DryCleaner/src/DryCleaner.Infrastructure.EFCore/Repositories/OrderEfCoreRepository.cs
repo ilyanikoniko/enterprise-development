@@ -32,15 +32,20 @@ public class OrderEfCoreRepository(DryCleanerDbContext context) : IOrderReposito
     /// <inheritdoc/>
     public async Task<Order?> Read(int entityId) =>
         await context.Orders
-            .Include(o => o.Client) 
-            .Include(o => o.Item).AsNoTracking().FirstOrDefaultAsync(o => o.Id == entityId);
+            .Include(o => o.Client)
+            .Include(o => o.Item)
+                .ThenInclude(i => i!.Category)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(o => o.Id == entityId);
 
     /// <inheritdoc/>
     public async Task<IList<Order>> ReadAll() =>
         await context.Orders
-            .Include(o => o.Client) 
+            .Include(o => o.Client)
             .Include(o => o.Item)
-            .AsNoTracking().ToListAsync();
+                .ThenInclude(i => i!.Category)
+            .AsNoTracking()
+            .ToListAsync();
 
     /// <inheritdoc/>
     public async Task<Order> Update(Order entity)

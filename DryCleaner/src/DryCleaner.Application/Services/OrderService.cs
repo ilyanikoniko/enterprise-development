@@ -24,7 +24,8 @@ public class OrderService(
         var order = Mapper.Map(dto);
         order.AcceptanceDate = DateTime.Now;
         var result = await repository.Create(order);
-        return Mapper.Map(result);
+        var createdOrder = await repository.Read(result.Id);
+        return Mapper.Map(createdOrder!);
     }
 
     /// <summary>

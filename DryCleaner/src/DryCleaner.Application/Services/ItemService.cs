@@ -23,7 +23,8 @@ public class ItemService(IItemRepository repository, ICategoryRepository categor
 
         var item = Mapper.Map(dto);
         var result = await repository.Create(item);
-        return Mapper.Map(result);
+        var createdItem = await repository.Read(result.Id);
+        return Mapper.Map(createdItem!);
     }
 
     /// <summary>

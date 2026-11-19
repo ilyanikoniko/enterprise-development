@@ -64,8 +64,17 @@ public static class Mapper
     /// <summary>
     /// Преобразует сущность Iten в DTO для чтения
     /// </summary>
+    /// <summary>
+    /// Преобразует сущность Item в DTO для чтения
+    /// </summary>
     public static ItemDto Map(Item entity) =>
-        new(entity.Id, entity.Name, entity.Material, entity.CategoryId, entity.Category?.Name ?? "Без категории");
+        new(
+            entity.Id,
+            entity.Name,
+            entity.Material,
+            Map(entity.Category ?? throw new InvalidOperationException(
+                "Категория изделия не загружена."))
+        );
 
     /// <summary>
     /// Преобразует DTO изделия (для создания) в доменную сущность
@@ -88,14 +97,16 @@ public static class Mapper
     /// Преобразует сущность Order в DTO для чтения
     /// </summary>
     public static OrderDto Map(Order entity) =>
-        new(entity.Id,
-            entity.ClientId,
-            entity.Client?.FullName ?? "Неизвестно",
-            entity.ItemId,
-            entity.Item?.Name ?? "Неизвестно",
+        new(
+            entity.Id,
+            Map(entity.Client ?? throw new InvalidOperationException(
+                "Клиент заказа не загружен.")),
+            Map(entity.Item ?? throw new InvalidOperationException(
+                "Изделие заказа не загружено.")),
             entity.AcceptanceDate,
             entity.CompletionDays,
-            entity.Status.ToString());
+            entity.Status.ToString()
+        );
 
     /// <summary>
     /// Преобразует DTO заказа (для создания) в доменную сущность
