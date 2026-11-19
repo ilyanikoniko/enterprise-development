@@ -68,8 +68,6 @@ public class AuthController(
         }
         catch (DbUpdateException)
         {
-            // Уникальный индекс защищает и от одновременной
-            // регистрации двух пользователей с одним логином.
             if (await dbContext.Users.AsNoTracking()
                 .AnyAsync(u => u.Username == request.Username))
             {
@@ -129,7 +127,7 @@ public class AuthController(
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, username),
-            new Claim(ClaimTypes.Role, "Admin")
+            new Claim(ClaimTypes.Role, "User")
         };
 
         var token = new JwtSecurityToken(
