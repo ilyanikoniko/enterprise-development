@@ -1,10 +1,8 @@
-﻿using DryCleaner.Api;
-using DryCleaner.Application.Services;
+﻿using DryCleaner.Application.Services;
 using DryCleaner.Contracts.Dtos.Categories;
 using DryCleaner.Contracts.Dtos.Clients;
 using DryCleaner.Contracts.Dtos.Items;
 using DryCleaner.Contracts.Interfaces;
-using DryCleaner.Domain.Data;
 using DryCleaner.Domain.Interfaces;
 using DryCleaner.Infrastructure.EFCore;
 using DryCleaner.Infrastructure.EFCore.Repositories;
@@ -15,7 +13,6 @@ using Microsoft.OpenApi;
 using Microsoft.AspNetCore.Identity;
 using Scalar.AspNetCore;
 using System.Text;
-using Microting.EntityFrameworkCore.MySql.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
