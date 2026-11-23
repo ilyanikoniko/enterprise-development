@@ -13,10 +13,10 @@ public class User
     /// <summary>
     /// Логин пользователя
     /// </summary>
-    public string Username { get; set; } = string.Empty;
+    public required string Username { get; set; }
 
     /// <summary>
     /// Хэш пароля пользователя
     /// </summary>
-    public string PasswordHash { get; set; } = string.Empty;
+    public required string PasswordHash { get; set; }
 }

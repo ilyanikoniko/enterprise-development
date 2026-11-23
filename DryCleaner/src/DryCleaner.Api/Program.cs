@@ -9,7 +9,6 @@ using DryCleaner.Infrastructure.EFCore.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Identity;
 using Scalar.AspNetCore;
 using System.Text;
@@ -20,44 +19,83 @@ builder.AddServiceDefaults();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+        options.JsonSerializerOptions.Encoder =
+            System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
     });
+
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen(options =>
+builder.Services.AddOpenApi(options =>
 {
-    var xmlFile = $"{typeof(Program).Assembly.GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-
-    options.IncludeXmlComments(xmlPath);
-
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    // Добавление описаний CRUD-эндпоинтов
+    options.AddOperationTransformer((operation, context, cancellationToken) =>
     {
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT",
-        Description = "Введите JWT токен"
+        if (context.Description.ActionDescriptor is
+            Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor action)
+        {
+            var method = action.MethodInfo;
+
+            if (method.DeclaringType?.IsGenericType == true &&
+                method.DeclaringType.GetGenericTypeDefinition() ==
+                    typeof(DryCleaner.Api.Controllers.CrudControllerBase<,,>))
+            {
+                operation.Summary = method.Name switch
+                {
+                    "Create" => "Создать новую запись",
+                    "Edit" => "Обновить существующую запись по id",
+                    "Delete" => "Удалить запись по id",
+                    "GetAll" => "Получить список всех записей",
+                    "Get" => "Получить запись по id",
+                    _ => operation.Summary
+                };
+            }
+        }
+
+        return Task.CompletedTask;
     });
 
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    // Настройка JWT Bearer в OpenAPI
+    options.AddDocumentTransformer((document, context, cancellationToken) =>
     {
-        {
-            new OpenApiSecurityScheme
+        document.Components ??= new Microsoft.OpenApi.OpenApiComponents();
+
+        document.Components.SecuritySchemes =
+            new Dictionary<string, Microsoft.OpenApi.IOpenApiSecurityScheme>
             {
-                Reference = new OpenApiReference
+                ["Bearer"] = new Microsoft.OpenApi.OpenApiSecurityScheme
                 {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
+                    Type = Microsoft.OpenApi.SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    Description = "Введите JWT токен"
                 }
-            },
-            Array.Empty<string>()
+            };
+
+        foreach (var path in document.Paths.Values)
+        {
+            if (path.Operations is null)
+                continue;
+
+            foreach (var operation in path.Operations.Values)
+            {
+                operation.Security ??= [];
+
+                operation.Security.Add(
+                    new Microsoft.OpenApi.OpenApiSecurityRequirement
+                    {
+                        [new Microsoft.OpenApi.OpenApiSecuritySchemeReference(
+                            "Bearer", document)] = []
+                    });
+            }
         }
+
+        return Task.CompletedTask;
     });
 });
 
 builder.AddMySqlDbContext<DryCleanerDbContext>("drycleanerdb");
 
-// Регистрация репозиториев 
+// Регистрация репозиториев
 builder.Services.AddTransient<IClientRepository, ClientEfCoreRepository>();
 builder.Services.AddTransient<IItemRepository, ItemEfCoreRepository>();
 builder.Services.AddTransient<IOrderRepository, OrderEfCoreRepository>();
@@ -72,6 +110,7 @@ builder.Services.AddTransient<IApplicationService<ItemDto, ItemCreateDto, int>, 
 builder.Services.AddTransient<IOrderService, OrderService>();
 
 builder.Services.AddScoped<IPasswordHasher<string>, PasswordHasher<string>>();
+
 // Настройка аутентификации JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -84,7 +123,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
         };
     });
 
@@ -94,11 +134,11 @@ app.UseMiddleware<DryCleaner.Api.Middleware.ExceptionHandlingMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    app.MapOpenApi();
 
     app.MapScalarApiReference(options =>
     {
-        options.WithOpenApiRoutePattern("/swagger/{documentName}/swagger.json");
+        options.WithOpenApiRoutePattern("/openapi/{documentName}.json");
     });
 
     using var scope = app.Services.CreateScope();

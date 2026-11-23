@@ -10,6 +10,11 @@ namespace DryCleaner.Api.Middleware;
 /// </summary>
 public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
 {
+    /// <summary>
+    /// Обрабатывает HTTP-запрос и перехватывает исключения, возникающие при его выполнении
+    /// </summary>
+    /// <param name="context">Контекст текущего HTTP-запроса</param>
+    /// <returns>Задача, представляющая асинхронную обработку запроса</returns>
     public async Task InvokeAsync(HttpContext context)
     {
         try

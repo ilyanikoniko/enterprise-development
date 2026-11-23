@@ -1,15 +1,14 @@
-﻿
-using DryCleaner.Domain.Entities;
+﻿using DryCleaner.Domain.Entities;
 using DryCleaner.Infrastructure.EFCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using DryCleaner.Contracts.Dtos.Auth;
 
 namespace DryCleaner.Api.Controllers;
 
@@ -24,19 +23,6 @@ public class AuthController(
     DryCleanerDbContext dbContext)
     : ControllerBase
 {
-    /// <summary>
-    /// Данные для регистрации пользователя
-    /// </summary>
-    public record RegisterRequest(
-        [Required, StringLength(100, MinimumLength = 3)] string Username,
-        [Required, MinLength(8)] string Password);
-
-    /// <summary>
-    /// Данные для авторизации пользователя
-    /// </summary>
-    public record LoginRequest(
-        [Required] string Username,
-        [Required] string Password);
 
     /// <summary>
     /// Регистрация нового пользователя

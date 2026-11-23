@@ -138,7 +138,7 @@
 
 # Лабораторная работа №3 — ORM «Химчистка»
 
-Учебный проект по дисциплине «Разработка корпоративных приложений» на платформе **.NET 9**.
+Учебный проект по дисциплине «Разработка корпоративных приложений» на платформе **.NET 10**.
 
 ## Предметная область
 
@@ -153,7 +153,7 @@
 
 ## Технологии
 
-- .NET 9
+- .NET 10
 - ASP.NET Core Web API
 - **Entity Framework Core 9** (ORM)
 - **Pomelo.EntityFrameworkCore.MySql** (провайдер MySQL)
@@ -163,7 +163,7 @@
 - **Docker** (контейнеризация БД)
 - JWT (аутентификация и авторизация)
 - ASP.NET Core Identity PasswordHasher (хеширование паролей)
-- OpenAPI + Swashbuckle
+- Microsoft.AspNetCore.OpenApi
 - Scalar UI
 - xUnit v3
 - LINQ
@@ -224,7 +224,7 @@ enterprise-development/
   - Клиент, потративший наибольшую сумму.
 - **Регистрация пользователей** — создание учётных записей с хешированием паролей.
 - **Авторизация** — JWT-токены. Все контроллеры (кроме `Auth`) защищены атрибутом `[Authorize]`.
-- **Документация** — OpenAPI (Swashbuckle) + Scalar UI с русскими описаниями эндпоинтов.
+- **Документация** — OpenAPI (Microsoft.AspNetCore.OpenApi) + Scalar UI с русскими описаниями эндпоинтов.
 - **База данных** — MySQL, развёрнутая в Docker-контейнере через Aspire.
 - **Миграции** — создание таблиц и заполнение начальными данными (`HasData`).
 - **Связанные DTO** — заказы возвращают вложенные `ClientDto` и `ItemDto`, а изделия содержат `CategoryDto`. Связанные сущности загружаются через `Include()` и `ThenInclude()`.
@@ -269,7 +269,7 @@ enterprise-development/
 
 ## Запуск
 
-> **Требования:** Установленный **Docker Desktop** (должен быть запущен) и **.NET 9 SDK**.
+> **Требования:** Установленный **Docker Desktop** (должен быть запущен) и **.NET 10 SDK**.
 
 1. Перейти в папку `DryCleaner`.
 2. Запустить проект Aspire:
@@ -286,9 +286,15 @@ enterprise-development/
 
 4. Открыть **Aspire Dashboard** (ссылка появится в консоли).
 
-5. Открыть **Scalar** по адресу API из Aspire Dashboard, добавив `/scalar/v1`.
+5. Открыть **Scalar UI** по адресу:
 
-   > Порты Aspire и API могут меняться при каждом запуске.
+   https://localhost:51203/scalar
+
+   Спецификация OpenAPI доступна по адресу:
+
+   https://localhost:51203/openapi/v1.json
+
+   > HTTP- и HTTPS-порты API закреплены в конфигурации Aspire AppHost.
 
 6. Зарегистрировать пользователя через `POST /api/Auth/register`, указав логин и пароль.
 
