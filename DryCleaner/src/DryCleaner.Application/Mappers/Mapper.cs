@@ -62,9 +62,6 @@ public static class Mapper
     #region Изделия
 
     /// <summary>
-    /// Преобразует сущность Iten в DTO для чтения
-    /// </summary>
-    /// <summary>
     /// Преобразует сущность Item в DTO для чтения
     /// </summary>
     public static ItemDto Map(Item entity) =>
@@ -118,8 +115,10 @@ public static class Mapper
         ItemId = dto.ItemId,
         CompletionDays = dto.CompletionDays,
         Status = Enum.TryParse<OrderStatus>(dto.Status, true, out var status)
+            && Enum.IsDefined(status)
             ? status
-            : throw new BadRequestException($"Недопустимый статус заказа: '{dto.Status}'. " +
+            : throw new BadRequestException(
+                $"Недопустимый статус заказа: '{dto.Status}'. " +
                 $"Допустимые значения: Accepted, InProgress, Ready, Completed, Cancelled.")
     };
 
