@@ -8,6 +8,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Protobuf Include="..\DryCleaner.Contracts\Protos\orders.proto" GrpcServices="Server">
+		  <Link>Protos\orders.proto</Link>
+		</Protobuf>
 		<Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
 	</ItemGroup>
 

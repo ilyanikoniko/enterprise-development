@@ -9,6 +9,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Aspire.Pomelo.EntityFrameworkCore.MySql" Version="13.5.0" />
+		<PackageReference Include="Grpc.AspNetCore" Version="2.64.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.13" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.13">
@@ -24,6 +25,12 @@
 		<ProjectReference Include="..\DryCleaner.Application\DryCleaner.Application.csproj" />
 		<ProjectReference Include="..\DryCleaner.Contracts\DryCleaner.Contracts.csproj" />
 		<ProjectReference Include="..\DryCleaner.Domain\DryCleaner.Domain.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Protobuf Include="..\DryCleaner.Contracts\Protos\orders.proto" GrpcServices="Client">
+	    <Link>Protos\orders.proto</Link>
+	  </Protobuf>
 	</ItemGroup>
 
 </Project>
