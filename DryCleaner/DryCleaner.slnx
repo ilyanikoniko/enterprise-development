@@ -4,6 +4,8 @@
   <Project Path="src/DryCleaner.Application/DryCleaner.Application.csproj" />
   <Project Path="src/DryCleaner.Contracts/DryCleaner.Contracts.csproj" />
   <Project Path="src/DryCleaner.Domain/DryCleaner.Domain.csproj" />
+  <Project Path="src/DryCleaner.Generator.Grpc.Host/DryCleaner.Generator.Grpc.Host.csproj" Id="74f5e5e2-e06c-4cd1-aeec-ec7b33fdc626" />
+  <Project Path="src/DryCleaner.Generator/DryCleaner.Generator.csproj" />
   <Project Path="src/DryCleaner.Infrastructure.EFCore/DryCleaner.Infrastructure.EFCore.csproj" />
   <Project Path="src/DryCleaner.Infrastructure.InMemory/DryCleaner.Infrastructure.InMemory.csproj" />
   <Project Path="src/DryCleaner.ServiceDefaults/DryCleaner.ServiceDefaults.csproj" />

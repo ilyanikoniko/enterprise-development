@@ -1,23 +1,25 @@
 ﻿syntax = "proto3";
 
+package drycleaner.orders.v1;
+
 option csharp_namespace = "DryCleaner.Contracts.Protos";
 
 // Служба потоковой передачи заказов
 service OrderGrpcService
 {
-    rpc OrderGetStream(OrderGenerationRequest)
-        returns (stream OrderListResponse);
+    rpc OrderGetStream(OrderGetStreamRequest)
+        returns (stream OrderGetStreamResponse);
 }
 
 // Запрос на генерацию заказов
-message OrderGenerationRequest
+message OrderGetStreamRequest
 {
     repeated int32 client_ids = 1;
     repeated int32 item_ids = 2;
 }
 
 // Пакет сгенерированных заказов
-message OrderListResponse
+message OrderGetStreamResponse
 {
     repeated OrderResponse orders = 1;
     bool is_final = 2;
