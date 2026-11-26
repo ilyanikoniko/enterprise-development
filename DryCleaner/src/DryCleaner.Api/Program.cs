@@ -12,9 +12,22 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
 using Scalar.AspNetCore;
 using System.Text;
+using DryCleaner.Api.BackgroundServices;
+using DryCleaner.Contracts.Protos;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
+
+builder.Services.AddGrpcClient<OrderGrpcService.OrderGrpcServiceClient>(
+    options =>
+    {
+        options.Address = new Uri("https://ordergenerator");
+    });
+
+if (builder.Configuration.GetValue<bool>("OrderGeneration:Enabled"))
+{
+    builder.Services.AddHostedService<OrderGenerationBackgroundService>();
+}
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>

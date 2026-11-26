@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DryCleaner.Api\DryCleaner.Api.csproj" />
+    <ProjectReference Include="..\DryCleaner.Generator.Grpc.Host\DryCleaner.Generator.Grpc.Host.csproj" />
   </ItemGroup>
 
 </Project>
