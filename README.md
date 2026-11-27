@@ -393,4 +393,4 @@ dotnet test tests/DryCleaner.IntegrationTests/DryCleaner.IntegrationTests.csproj
 
 ### Результаты тестирования
 
-![Результаты тестирования](./docs/tests_results.png)
+![Результаты тестирования](./docs/tests_results.jpg)
