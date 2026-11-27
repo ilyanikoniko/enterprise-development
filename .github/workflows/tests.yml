@@ -22,9 +22,6 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      - name: Check Docker
-        run: docker info
-
       - name: Setup HTTPS certificate
         run: |
           export SSL_CERT_DIR="$HOME/.aspnet/dev-certs/trust:/usr/lib/ssl/certs"
