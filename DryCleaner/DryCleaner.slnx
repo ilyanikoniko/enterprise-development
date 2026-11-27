@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/DryCleaner.IntegrationTests/DryCleaner.IntegrationTests.csproj" />
+  </Folder>
   <Project Path="src/DryCleaner.Api/DryCleaner.Api.csproj" />
   <Project Path="src/DryCleaner.AppHost/DryCleaner.AppHost.csproj" />
   <Project Path="src/DryCleaner.Application/DryCleaner.Application.csproj" />
