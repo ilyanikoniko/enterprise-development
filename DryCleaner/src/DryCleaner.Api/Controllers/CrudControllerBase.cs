@@ -20,6 +20,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     /// <summary>
     /// Создать новую запись
     /// </summary>
+    /// <param name="newDto">Данные для создания записи</param>
     /// <response code="201">Запись успешно создана</response>
     /// <response code="400">Некорректные данные</response>
     /// <response code="500">Внутренняя ошибка сервера</response>
@@ -42,6 +43,8 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     /// <summary>
     /// Обновить существующую запись по id
     /// </summary>
+    /// <param name="id">Идентификатор записи</param>
+    /// <param name="newDto">Данные для обновления записи</param>
     /// <response code="200">Запись успешно обновлена</response>
     /// <response code="400">Некорректные данные</response>
     /// <response code="404">Запись не найдена</response>
@@ -66,6 +69,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     /// <summary>
     /// Удалить запись по id
     /// </summary>
+    /// <param name="id">Идентификатор удаляемой записи</param>
     /// <response code="200">Запись успешно удалена</response>
     /// <response code="404">Запись не найдена</response>
     /// <response code="500">Внутренняя ошибка сервера</response>
@@ -108,6 +112,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     /// <summary>
     /// Получить запись по id
     /// </summary>
+    /// <param name="id">Идентификатор записи</param>
     /// <response code="200">Запись успешно найдена</response>
     /// <response code="404">Запись не найдена</response>
     /// <response code="500">Внутренняя ошибка сервера</response>

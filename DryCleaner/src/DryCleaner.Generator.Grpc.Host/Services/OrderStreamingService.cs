@@ -5,6 +5,8 @@ namespace DryCleaner.Generator.Grpc.Host.Services;
 
 /// <summary>
 /// Служба потоковой передачи сгенерированных заказов
+/// <param name="generator">Генератор случайных заказов</param>
+/// <param name="logger">Логгер службы потоковой передачи</param>
 /// </summary>
 public class OrderStreamingService(
     OrderGenerator generator,
