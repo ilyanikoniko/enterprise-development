@@ -15,6 +15,8 @@ using System.Text;
 using DryCleaner.Api.BackgroundServices;
 using DryCleaner.Contracts.Protos;
 
+Console.OutputEncoding = System.Text.Encoding.UTF8;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
