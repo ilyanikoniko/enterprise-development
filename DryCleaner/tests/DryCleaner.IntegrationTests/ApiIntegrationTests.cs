@@ -51,7 +51,11 @@ public class ApiIntegrationTests(AppHostFixture fixture)
         // Регистрация
         using var registerResponse = await client.PostAsJsonAsync(
             "/api/auth/register",
-            new RegisterRequest(username, password),
+            new RegisterRequest
+            {
+                Username = username,
+                Password = password
+            },
             cancellationToken);
 
         Assert.Equal(
@@ -61,7 +65,11 @@ public class ApiIntegrationTests(AppHostFixture fixture)
         // Авторизация
         using var loginResponse = await client.PostAsJsonAsync(
             "/api/auth/login",
-            new LoginRequest(username, password),
+            new LoginRequest
+            {
+                Username = username,
+                Password = password
+            },
             cancellationToken);
 
         Assert.Equal(

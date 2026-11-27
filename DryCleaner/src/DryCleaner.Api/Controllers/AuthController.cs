@@ -15,6 +15,9 @@ namespace DryCleaner.Api.Controllers;
 /// <summary>
 /// Контроллер регистрации и авторизации пользователей
 /// </summary>
+/// <param name="configuration">Конфигурация приложения</param>
+/// <param name="passwordHasher">Хешер паролей</param>
+/// <param name="dbContext">Контекст базы данных</param>
 [Route("api/[controller]")]
 [ApiController]
 public class AuthController(
@@ -27,6 +30,8 @@ public class AuthController(
     /// <summary>
     /// Регистрация нового пользователя
     /// </summary>
+    /// <param name="request">Данные для регистрации пользователя</param>
+    /// <returns>Данные зарегистрированного пользователя или сообщение об ошибке</returns>
     [HttpPost("register")]
     [AllowAnonymous]
     public async Task<IActionResult> Register(
@@ -73,6 +78,8 @@ public class AuthController(
     /// <summary>
     /// Авторизация пользователя и выдача JWT-токена
     /// </summary>
+    /// <param name="request">Данные для авторизации пользователя</param>
+    /// <returns>JWT-токен или сообщение об ошибке авторизации</returns>
     [HttpPost("login")]
     [AllowAnonymous]
     public async Task<IActionResult> Login(
@@ -101,6 +108,8 @@ public class AuthController(
     /// <summary>
     /// Генерация JWT-токена
     /// </summary>
+    /// <param name="username">Логин пользователя</param>
+    /// <returns>Строка с JWT-токеном</returns>
     private string GenerateJwtToken(string username)
     {
         var securityKey = new SymmetricSecurityKey(

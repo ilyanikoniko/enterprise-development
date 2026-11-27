@@ -6,6 +6,9 @@ namespace DryCleaner.Api.Controllers;
 /// <summary>
 /// Базовый абстрактный контроллер для выполнения CRUD операций над сущностями
 /// </summary>
+/// <typeparam name="TDto">Тип DTO для чтения</typeparam>
+/// <typeparam name="TCreateUpdateDto">Тип DTO для создания и обновления</typeparam>
+/// <typeparam name="TKey">Тип идентификатора сущности</typeparam>
 /// <param name="appService">Сервис приложения для работы с сущностью</param>
 /// <param name="logger">Логгер для записи информации о запросах</param>
 [Route("api/[controller]")]

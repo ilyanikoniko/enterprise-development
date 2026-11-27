@@ -1,13 +1,17 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
-namespace DryCleaner.Contracts.Dtos.Auth;
+﻿namespace DryCleaner.Contracts.Dtos.Auth;
 
 /// <summary>
-/// Данные для авторизации пользователя
+/// DTO запроса на авторизацию
 /// </summary>
-/// <param name="Username">Логин пользователя</param>
-/// <param name="Password">Пароль пользователя</param>
-public record LoginRequest(
-    [Required] string Username,
-    [Required] string Password);
+public record LoginRequest
+{
+    /// <summary>
+    /// Логин пользователя
+    /// </summary>
+    public required string Username { get; init; }
+
+    /// <summary>
+    /// Пароль пользователя
+    /// </summary>
+    public required string Password { get; init; }
+}

@@ -8,6 +8,8 @@ namespace DryCleaner.Api.Controllers;
 /// <summary>
 /// Контроллер для работы с заказами
 /// </summary>
+/// <param name="crudService">Сервис для работы с заказами</param>
+/// <param name="logger">Логгер контроллера</param>
 [Authorize]
 public class OrdersController(
     IOrderService crudService,

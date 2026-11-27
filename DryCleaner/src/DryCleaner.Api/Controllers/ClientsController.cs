@@ -7,6 +7,8 @@ namespace DryCleaner.Api.Controllers;
 /// <summary>
 /// Контроллер для работы с клиентами
 /// </summary>
+/// <param name="crudService">Сервис для работы с клиентами</param>
+/// <param name="logger">Логгер контроллера</param>
 [Authorize]
 public class ClientsController(
     IApplicationService<ClientDto, ClientEditDto, int> crudService,
